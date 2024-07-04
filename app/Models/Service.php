@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 
 /**
  * Class Service
@@ -42,20 +43,11 @@ class Service extends Model
      */
     protected $fillable = ['id_cuenta','monto','saldo_pendiente','detalles','fecha'];
   
-
-
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
     public function checkingAccount()
     {
         return $this->hasOne('App\Models\CheckingAccount', 'id', 'id_cuenta');
     }
     
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
 
     // Relación a los pagos asociados
     public function payments()
@@ -124,9 +116,13 @@ class Service extends Model
             $checkingAccount->save();
         });
     }
-
-    public function getFromDateAttribute($value) {
-        return \Carbon\Carbon::parse($value)->format('d-m-Y');
+ 
+    public function getFormattedFromDateAttribute()
+    {
+        Carbon::setLocale('es');
+        //MES ABREVIADO return Carbon::parse($this->fecha)->format('d M. Y');
+        return Carbon::parse($this->fecha)->format('d/m/Y');
+    
     }
 
     public function getFormattedMontoAttribute()

@@ -3,6 +3,7 @@
 @section('css')
 <link href="https://cdn.datatables.net/2.0.1/css/dataTables.bootstrap5.css" rel="stylesheet">
 <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -48,38 +49,42 @@
 										<th>Cuenta asociada</th>
                                         <th>Fecha</th>
                                         <th>Detalles</th>
+                                        <th>Estado</th>
 										<th>Monto</th>
 										<th>Saldo Pendiente</th>
-										
-									
                                         <th>Acciones</th>
-                                        <th>Ver</th>
-                                     
-                              
+                                        <th>Ver asociados</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($services as $service)
                                         <tr>
                                             <td>{{'Servicio - ' . ++$i }}</td>
-                                            <td style="white-space: nowrap;">{{ $service->checkingAccount->nombre }}</td>
-                                            <td style="white-space: nowrap;">{{ $service->fecha }}</td>
+                                            <td style="white-space: nowrap; font-weight: bold">{{ $service->checkingAccount->nombre }}</td>
+                                            <td style="white-space: nowrap;">{{ $service->formatted_from_date }}</td>
                                             <td>{{ $service->detalles }}</td>
-                                            <td style="white-space: nowrap;">{{ '$'. $service->formatted_monto }}</td>
-                                            <td style="white-space: nowrap;">{{ '$'. $service->formatted_SaldoPendiente }}</td>
-                                           
-                                         
-                                         
+                                            <td style="text-align: center; font-size: 20px;">
+                                                @if ($service->saldo_pendiente != "0.00")
+                                                    <span class="badge badge-primary">Pendiente</span>
+                                                @else
+                                                    <span class="badge badge-success">Pago</span>
+                                                @endif
+                                            </td>
+
+                                            <!-- <td style="white-space: nowrap;">{{ '$'. $service->formatted_monto }}</td> -->
+                                            <td style="white-space: nowrap;">{{ '$'. $service->monto }}</td>
+                                            <!-- <td style="white-space: nowrap;">{{ '$'. $service->formatted_SaldoPendiente }}</td> -->
+                                            <td style="white-space: nowrap;">{{ '$'. $service->saldo_pendiente }}</td>
                                            
                                             <td style="white-space: nowrap;">    
                                             <form action="{{ route('services.destroy',$service->id) }}" method="POST">
                                                 <!-- Parametro 1: service_id, recibe $service->id -->
                                                 <!-- Parametro 2: service_id, recibe $service->id -->
                                         
-                                                <a class="btn btn-sm btn-success" href="{{ route('services.edit',$service->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
+                                                <a class="btn btn-sm btn" href="{{ route('services.edit',$service->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('') }}</a>
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Eliminar') }}</button>
+                                                <button type="submit" class="btn btn btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('') }}</button>
                                             
                                                 @if ($service->saldo_pendiente != "0.00")
                                                 <a class="btn btn-sm btn-warning" href="{{ route('payments.create', ['service_id' => $service->id, 'cuenta_id' => $service->id_cuenta]) }}">Pagar</a>
@@ -88,13 +93,13 @@
                                         </td>
                                             <td style="white-space: nowrap;">
                                                 <div class="d-inline-block">
-                                                    <a class="btn btn-sm btn" href="{{ route('payments.showPaymentsPerService', ['id' => $service->id]) }}" style="background-color: pink;">Pagos asociados</a>
+                                                    <a class="btn btn-sm btn" href="{{ route('payments.showPaymentsPerService', ['id' => $service->id]) }}" style="background-color: pink;">Pagos</a>
                                                 </div>
                                                 <div class="d-inline-block">
-                                                <form action="{{ route('invoices.create') }}" method="POST" target="_blank">
+                                                    <form action="{{ route('invoices.create') }}" method="POST" target="_blank">
                                                         @csrf
                                                         <input type="hidden" name="id_servicio" value="{{ $service->id }}">
-                                                        <button type="submit" class="btn btn-sm btn" style="background-color: pink;">Factura C</button>
+                                                        <button type="submit" class="btn btn-sm btn" ><i class="fa-solid fa-download"></i></button>
                                                     </form>
                                                 </div>
                                                 <!-- <div class="d-inline-block">
@@ -104,7 +109,7 @@
 
                                                 </div> -->
 
-                                            </td>
+                                           
 
                                                                                     
 
@@ -127,6 +132,11 @@
                             </table>
 
                             @section('js')
+
+                            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+                            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+                            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+                            
                             <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
                             <script src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
                             <script src="https://cdn.datatables.net/2.0.1/js/dataTables.bootstrap5.js"></script>
