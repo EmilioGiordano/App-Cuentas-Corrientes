@@ -46,7 +46,7 @@
                     @endforeach -->
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover" id='dataTable'>
+                            <table class="table table-hover" id='dataTable'>
                                 <thead class="thead">
                                     <tr>
                                         <th>#</th>

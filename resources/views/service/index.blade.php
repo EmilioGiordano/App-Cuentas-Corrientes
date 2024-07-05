@@ -42,7 +42,7 @@
 
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover" id='dataTable'>
+                            <table class="table table-hover" id='dataTable'>
                                 <thead class="thead">
                                     <tr>
                                         <th>Servicio</th>
@@ -53,82 +53,57 @@
 										<th>Monto</th>
 										<th>Saldo Pendiente</th>
                                         <th>Acciones</th>
-                                        <th>Ver asociados</th>
+                                      
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($services as $service)
-                                        <tr>
-                                            <td>{{'Servicio - ' . ++$i }}</td>
-                                            <td style="white-space: nowrap; font-weight: bold">{{ $service->checkingAccount->nombre }}</td>
-                                            <td style="white-space: nowrap;">{{ $service->formatted_from_date }}</td>
-                                            <td>{{ $service->detalles }}</td>
-                                            <td style="text-align: center; font-size: 20px;">
-                                                @if ($service->saldo_pendiente != "0.00")
-                                                    <span class="badge badge-primary">Pendiente</span>
-                                                @else
-                                                    <span class="badge badge-success">Pago</span>
-                                                @endif
-                                            </td>
-
-                                            <!-- <td style="white-space: nowrap;">{{ '$'. $service->formatted_monto }}</td> -->
-                                            <td style="white-space: nowrap;">{{ '$'. $service->monto }}</td>
-                                            <!-- <td style="white-space: nowrap;">{{ '$'. $service->formatted_SaldoPendiente }}</td> -->
-                                            <td style="white-space: nowrap;">{{ '$'. $service->saldo_pendiente }}</td>
-                                           
-                                            <td style="white-space: nowrap;">    
-                                            <form action="{{ route('services.destroy',$service->id) }}" method="POST">
-                                                <!-- Parametro 1: service_id, recibe $service->id -->
-                                                <!-- Parametro 2: service_id, recibe $service->id -->
-                                        
-                                                <a class="btn btn-sm btn" href="{{ route('services.edit',$service->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('') }}</a>
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('') }}</button>
-                                            
-                                                @if ($service->saldo_pendiente != "0.00")
-                                                <a class="btn btn-sm btn-warning" href="{{ route('payments.create', ['service_id' => $service->id, 'cuenta_id' => $service->id_cuenta]) }}">Pagar</a>
-                                                @endif    
-                                            </form>
+                                @foreach ($services as $service)
+                                    <tr>
+                                        <td>{{'Servicio - ' . ++$i }}</td>
+                                        <td style="white-space: nowrap; font-weight: bold">{{ $service->checkingAccount->nombre }}</td>
+                                        <td style="white-space: nowrap;">{{ $service->formatted_from_date }}</td>
+                                        <td>{{ $service->detalles }}</td>
+                                        <td style="text-align: center; font-size: 20px;">
+                                            @if ($service->saldo_pendiente != "0.00")
+                                                <span class="badge badge-primary">Pendiente</span>
+                                            @else
+                                                <span class="badge badge-success">Pago</span>
+                                            @endif
                                         </td>
-                                            <td style="white-space: nowrap;">
+                                        <td style="white-space: nowrap;">{{ '$'. $service->monto }}</td>
+                                        <td style="white-space: nowrap;">{{ '$'. $service->saldo_pendiente }}</td>
+                                        <td style="white-space: nowrap;">
+                                            <div class="d-inline-block">
+                                                <a class="btn btn-sm btn" href="{{ route('services.edit',$service->id) }}"><i class="fa fa-fw fa-edit"></i></a>
+                                            </div>
+                                            <div class="d-inline-block">
+                                                <form action="{{ route('services.destroy',$service->id) }}" method="POST" class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn btn-sm"><i class="fa fa-fw fa-trash"></i></button>
+                                                </form>
+                                            </div>
+                                            <div class="d-inline-block">
+                                                <form action="{{ route('invoices.create') }}" method="POST" target="_blank" class="d-inline">
+                                                    @csrf
+                                                    <input type="hidden" name="id_servicio" value="{{ $service->id }}">
+                                                    <button type="submit" class="btn btn-sm btn"><i class="fa-solid fa-download"></i></button>
+                                                </form>
+                                            </div>
+                                            <div class="d-inline-block">
+                                                <a class="btn btn-sm btn" href="{{ route('payments.showPaymentsPerService', ['id' => $service->id]) }}" style="background-color: pink;">Pagos</a>
+                                            </div>
+                                            @if ($service->saldo_pendiente != "0.00")
                                                 <div class="d-inline-block">
-                                                    <a class="btn btn-sm btn" href="{{ route('payments.showPaymentsPerService', ['id' => $service->id]) }}" style="background-color: pink;">Pagos</a>
+                                                    <a class="btn btn-sm btn-warning" href="{{ route('payments.create', ['service_id' => $service->id, 'cuenta_id' => $service->id_cuenta]) }}">Pagar</a>
                                                 </div>
-                                                <div class="d-inline-block">
-                                                    <form action="{{ route('invoices.create') }}" method="POST" target="_blank">
-                                                        @csrf
-                                                        <input type="hidden" name="id_servicio" value="{{ $service->id }}">
-                                                        <button type="submit" class="btn btn-sm btn" ><i class="fa-solid fa-download"></i></button>
-                                                    </form>
-                                                </div>
-                                                <!-- <div class="d-inline-block">
-                                                    <a href="" class="btn btn-primary btn-sm float-right" data-placement="left">
-                                                        {{ __('Descargar Factura C') }}
-                                                    </a>
-
-                                                </div> -->
-
+                                            @endif
                                            
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
 
-                                                                                    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                        </tr>
-                                    @endforeach
-                                </tbody>
                             </table>
 
                             @section('js')

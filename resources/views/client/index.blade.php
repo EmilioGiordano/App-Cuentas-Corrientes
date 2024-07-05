@@ -5,8 +5,8 @@
 <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
 @endsection
+
 
 @section('template_title')
     Client
@@ -45,25 +45,18 @@
                             <table class="table table-striped table-hover" id='dataTable'>
                                 <thead class="thead">
                                     <tr>
-                                        <th>No</th>
-                                        
 										<th>Nombre y apellido</th>
-					
 										<th>Dni</th>
 										<th>Cuitcuil</th>
 										<th>Email</th>
 										<th>Telefono</th>
-										
 										<th>Condicion Fiscal</th>
                                         <th>Acciones</th>
-                                        
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($clients as $client)
                                         <tr>
-                                            <td>{{ ++$i }}</td>
-
                                             <td>{{ $client->nombre . ' ' . $client->apellido }}</td>
                                             <td>{{ $client->dni }}</td>
                                             <td>{{ $client->cuitcuil }}</td>
@@ -76,12 +69,15 @@
                                                     Sin información
                                                 @endif
                                             </td>
-											<!-- <td>{{ $client->id_user }}</td> -->
-		
                                             <td style="white-space: nowrap;">
                                                 <form action="{{ route('clients.destroy',$client->id) }}" method="POST">
-
+                                                    <!-- Si id_cuenta == null -> CREAR Cuenta -->
+                                                    @if ($client->checkingAccounts()->exists())
                                                     <a class="btn btn-sm btn-warning" href="{{ route('checking-accounts.createForClient', ['client_id' => $client->id])  }}"><i class="fa fa-fw fa-plus"></i> Crear cuenta</a>
+                                                    @else
+                                                    <a class="btn btn-sm btn-warning" href="{{ route('checking-accounts.createForClient', ['client_id' => $client->id])  }}"><i class="fa fa-fw fa-plus"></i> Ver cuenta</a>
+                                                    @endif
+
                                                     <a class="btn btn-sm btn-success"  href="{{ route('clients.edit',$client->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
                                                     @csrf
                                                     @method('DELETE')
