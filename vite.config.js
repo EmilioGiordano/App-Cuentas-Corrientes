@@ -7,7 +7,10 @@ export default defineConfig({
             input: [
                 'resources/sass/app.scss',
                 'resources/js/app.js',
-                'resources/js/datatable.js'
+                'resources/js/delete-button.js',
+                'resources/css/datatable.css',
+                'resources/css/service-index-badge.css',
+                'resources/css/datatable.js'
             ],
             refresh: true,
         }),

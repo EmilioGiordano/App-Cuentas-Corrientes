@@ -70,6 +70,7 @@ Route::get('checking-accounts/create', [CheckingAccountController::class, 'creat
 
 // Ruta para el método createForClient (crea la cuenta automáticamente para un cliente específico)
 Route::get('checking-accounts/createForClient/{client_id}', [CheckingAccountController::class, 'createForClient'])->name('checking-accounts.createForClient')->middleware('auth');
+Route::get('checking-accounts/show/{client_id}', [CheckingAccountController::class, 'show'])->name('checking-accounts.show')->middleware('auth');
 
 
 Route::get('payments/create/{service_id}/{cuenta_id}', [App\Http\Controllers\PaymentController::class, 'create'])->name('payments.create')->middleware('auth');

@@ -7,13 +7,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 @endsection
 
-
+<!-- Scripts -->
+@vite(['resources/js/datatable.js'])
 @section('template_title')
     Client
 @endsection
 @section('title', 'Listado de clientes')
-
-
 
 @section('content')
     <div class="container-fluid">
@@ -42,10 +41,10 @@
 
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover" id='dataTable'>
+                            <table class="table table-hover" id='dataTable'>
                                 <thead class="thead">
                                     <tr>
-										<th>Nombre y apellido</th>
+										<th style="white-space: nowrap" >Nombre y apellido</th>
 										<th>Dni</th>
 										<th>Cuitcuil</th>
 										<th>Email</th>
@@ -70,19 +69,31 @@
                                                 @endif
                                             </td>
                                             <td style="white-space: nowrap;">
-                                                <form action="{{ route('clients.destroy',$client->id) }}" method="POST">
-                                                    <!-- Si id_cuenta == null -> CREAR Cuenta -->
-                                                    @if ($client->checkingAccounts()->exists())
-                                                    <a class="btn btn-sm btn-warning" href="{{ route('checking-accounts.createForClient', ['client_id' => $client->id])  }}"><i class="fa fa-fw fa-plus"></i> Crear cuenta</a>
-                                                    @else
-                                                    <a class="btn btn-sm btn-warning" href="{{ route('checking-accounts.createForClient', ['client_id' => $client->id])  }}"><i class="fa fa-fw fa-plus"></i> Ver cuenta</a>
-                                                    @endif
+                                                <!-- Editar Cliente -->
+                                                <div class="d-inline-block">
+                                                    <a class="btn btn-sm btn" href="{{ route('clients.edit',$client->id) }}"><i class="fa fa-fw fa-edit"></i></a>
+                                                </div>
 
-                                                    <a class="btn btn-sm btn-success"  href="{{ route('clients.edit',$client->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Eliminar') }}</button>
-                                                </form>
+                                                <!-- Eliminar Cliente -->
+                                                <div class="d-inline-block">
+                                                    <form id="delete-button-general" action="{{ route('clients.destroy',$client->id) }}" method="POST" class="d-inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn btn-sm"><i class="fa fa-fw fa-trash"></i></button>
+                                                    </form>
+                                                </div>
+                                                <!-- Ver o Crear Cuenta -->
+                                                <div style="display: inline-block;">
+                                                    @if ($client->checkingAccounts()->exists())
+                                                        <a class="btn btn-sm btn-warning" href="{{ route('checking-accounts.show', ['client_id' => $client->checkingAccounts->first()->id]) }}">
+                                                            <i class="fa fa-fw fa-eye"></i> Cuenta
+                                                        </a>
+                                                    @else
+                                                        <a class="btn btn-sm btn-warning" href="{{ route('checking-accounts.createForClient', ['client_id' => $client->id]) }}">
+                                                            <i class="fa fa-fw fa-plus"></i> Cuenta
+                                                        </a>
+                                                    @endif
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -90,6 +101,7 @@
                             </table>
 
                             @section('js')
+                            <script src="/js/"></script>
                             <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
                             <script src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
                             <script src="https://cdn.datatables.net/2.0.1/js/dataTables.bootstrap5.js"></script>
@@ -98,29 +110,7 @@
                             <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script> <!-- Agregado para los botones -->
                             <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script> <!-- Agregado para los botones -->
                             <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script> <!-- Agregado para los botones -->
-                            <script>
-                                    $(document).ready(function(){
-                                        $('#dataTable').DataTable({
-                                            "ordering": true,
-                                            "order": [],
-                                            "language": {
-                                                // ... configuración de idioma ...
-                                            },
-                                            "dom": 'Blfrtip',
-                                            "buttons": [
-                                                'copy',
-                                                'excel',
-                                                'csv',
-                                                'pdf',
-                                                'print'
-                                            ],
-                                            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-                                            "columnDefs": [
-                                                { "targets": 'no-export', "searchable": false, "orderable": false, "visible": false }
-                                            ]
-                                        });
-                                    });
-                                </script>
+                            
                             @endsection
 
 

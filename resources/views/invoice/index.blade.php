@@ -15,6 +15,9 @@
     Invoice
 @endsection
 
+<!-- Scripts -->
+@vite(['resources/js/datatable.js'])
+
 @section('title', 'Listado de facturas')
 @section('content')
     <div class="container-fluid">
@@ -87,38 +90,7 @@
                             <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script> <!-- Agregado para los botones -->
                             <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script> <!-- Agregado para los botones -->
                             <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script> <!-- Agregado para los botones -->
-                            <script>
-                                    $(document).ready(function(){
-                                        $('#dataTable').DataTable({
-                                            "ordering": true,
-                                            "order": [],
-                                            "language": {
-                                                // ... configuración de idioma ...
-                                            },
-                                            "dom": 'Blfrtip',
-                                            "buttons": [
-                                                'copy',
-                                                'excel',
-                                                'csv',
-                                                'pdf',
-                                                'print'
-                                            ],
-                                            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-                                            "columnDefs": [
-                                                { "targets": 'no-export', "searchable": false, "orderable": false, "visible": false }
-                                            ]
-                                        });
-                                    });
-                                </script>
                             @endsection
-
-
-
-
-
-
-
-
                         </div>
                     </div>
                 </div>

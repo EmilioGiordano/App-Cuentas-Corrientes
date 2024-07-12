@@ -1,0 +1,34 @@
+/* resources/css/badge.css */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5em 1em;
+    border-radius: 12px;
+    font-size: 1em;
+}
+
+.badge-icon {
+    margin-right: 0.5em;
+}
+
+.badge-pendiente {
+    background-color: #fed1d1;
+    color: #450e0e !important;
+}
+
+.badge-pendiente .badge-icon {
+    color: #d0021b;
+}
+
+.badge-pago {
+    background-color: #d3e9d7;
+    color: #2d4f08 !important;
+}
+
+.badge-pago .badge-icon {
+    color: #2d4f08;
+}
+
+
+
+

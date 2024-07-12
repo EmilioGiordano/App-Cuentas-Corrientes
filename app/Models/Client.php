@@ -74,6 +74,4 @@ class Client extends Model
     {
         return $this->hasOne('App\Models\User', 'id', 'id_user');
     }
-    
-
 }

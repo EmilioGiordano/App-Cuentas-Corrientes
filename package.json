@@ -16,5 +16,8 @@
         "pdfmake": "^0.2.9",
         "sass": "^1.56.1",
         "vite": "^5.0.0"
+    },
+    "dependencies": {
+        "sweetalert2": "^11.12.2"
     }
 }

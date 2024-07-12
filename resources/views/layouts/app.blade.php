@@ -16,14 +16,17 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/js/delete-button.js', 'resources/css/datatable.css'])
+
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
+                @auth
                 <a class="navbar-brand" href="{{ url('/') }}">
                     Inicio
                 </a>
@@ -35,7 +38,7 @@
                     <!-- Left Side Of Navbar -->
                     <!-- LINK NAV BAR A EMPLEADOS -->
                     <ul class="navbar-nav me-auto">
-
+                        
                        
 
                         <li class="nav-item">
@@ -65,7 +68,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('receipts.index') }}">{{ __('Recibos de pagos') }}</a>    
                         </li>
-
+                        @endauth
                     </ul>
                       <ul class="navbar-nav me-auto">
                     </ul>

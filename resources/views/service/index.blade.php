@@ -15,6 +15,9 @@
 
 @section('title', 'Listado de servicios')
 
+<!-- Scripts -->
+    @vite(['resources/js/datatable.js', 'resources/css/services-index-badge.css'])
+
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -65,9 +68,14 @@
                                         <td>{{ $service->detalles }}</td>
                                         <td style="text-align: center; font-size: 20px;">
                                             @if ($service->saldo_pendiente != "0.00")
-                                                <span class="badge badge-primary">Pendiente</span>
+                                            <span class="badge badge-pendiente">
+                                                <i class="fa-solid fa-circle-exclamation badge-icon"></i> Pendiente
+                                            </span>
                                             @else
-                                                <span class="badge badge-success">Pago</span>
+                                            <span class="badge badge-pago">
+                                                <i class="fa-solid fa-circle-check badge-icon"></i> Pagado
+                                                
+                                            </span>                                            
                                             @endif
                                         </td>
                                         <td style="white-space: nowrap;">{{ '$'. $service->monto }}</td>
@@ -76,13 +84,18 @@
                                             <div class="d-inline-block">
                                                 <a class="btn btn-sm btn" href="{{ route('services.edit',$service->id) }}"><i class="fa fa-fw fa-edit"></i></a>
                                             </div>
+                                            
+
+                                            <!-- Eliminar Servicio -->
                                             <div class="d-inline-block">
-                                                <form action="{{ route('services.destroy',$service->id) }}" method="POST" class="d-inline">
+                                                <form id="delete-button-general" action="{{ route('services.destroy',$service->id) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn btn-sm"><i class="fa fa-fw fa-trash"></i></button>
                                                 </form>
                                             </div>
+                                            
+                                            <!-- Comprobante(PDF FACTURA C) -->
                                             <div class="d-inline-block">
                                                 <form action="{{ route('invoices.create') }}" method="POST" target="_blank" class="d-inline">
                                                     @csrf
@@ -120,29 +133,6 @@
                             <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script> <!-- Agregado para los botones -->
                             <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script> <!-- Agregado para los botones -->
                             <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script> <!-- Agregado para los botones -->
-                            <script>
-                                    $(document).ready(function(){
-                                        $('#dataTable').DataTable({
-                                            "ordering": true,
-                                            "order": [],
-                                            "language": {
-                                                // ... configuración de idioma ...
-                                            },
-                                            "dom": 'Blfrtip',
-                                            "buttons": [
-                                                'copy',
-                                                'excel',
-                                                'csv',
-                                                'pdf',
-                                                'print'
-                                            ],
-                                            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-                                            "columnDefs": [
-                                                { "targets": 'no-export', "searchable": false, "orderable": false, "visible": false }
-                                            ]
-                                        });
-                                    });
-                                </script>
                             @endsection
 
                         </div>

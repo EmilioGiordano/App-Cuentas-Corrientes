@@ -68,6 +68,18 @@ class CheckingAccountController extends Controller
         return view('checking-account.create', compact('checkingAccount', 'client'));
     }
 
+    public function seeAccount($client_id)
+    {
+        // Obtener el ID del usuario actualmente autenticado
+        $userId = Auth::id();
+        $client = Client::findOrFail($client_id);
+
+        $checkingAccount = new CheckingAccount();
+        
+        return view('checking-account.create', compact('checkingAccount', 'client'));
+        // crear view nueva
+    }
+
     public function store(Request $request)
     {
         request()->validate(CheckingAccount::$rules);
@@ -82,8 +94,9 @@ class CheckingAccountController extends Controller
     public function show($id)
     {
         $checkingAccount = CheckingAccount::find($id);
+        $client = $checkingAccount->client;
         $fiscal_condition = FiscalCondition::pluck('nombre_categoria', 'id');
-        return view('checking-account.show', compact('checkingAccount', 'fiscal_condition'));
+        return view('checking-account.show', compact('checkingAccount', 'fiscal_condition', 'client'));
     }
 
  

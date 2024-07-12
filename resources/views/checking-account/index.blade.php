@@ -13,6 +13,8 @@
 @endsection
 
 
+<!-- Scripts -->
+@vite(['resources/js/datatable.js'])
 @section('title', 'Listado de cuentas')
 
 
@@ -49,9 +51,6 @@
                             <table class="table table-hover" id='dataTable'>
                                 <thead class="thead">
                                     <tr>
-                                        <th>#</th>
-                                        
-										
 										<th>Nombre de la cuenta</th>
                                         <th>Cliente asociado</th>
                                         <th>Condicion Fiscal</th>
@@ -61,28 +60,34 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($checkingAccounts as $checkingAccount)
-                                        <tr>
-                                            <td>{{ ++$i }}</td>
-                                            
-											
+                                        <tr>                                            
                                             <td>{{ $checkingAccount->nombre }}</td>
                                             <td>{{ $checkingAccount->client->nombre . ' ' .$checkingAccount->client->apellido }}</td>       
                                             <!-- Nombre completo del cliente asociado a la cuenta -->
                                             <td>{{ $checkingAccount->client->FiscalCondition->nombre_categoria }}</td>
                                             <td>{{'$'. $checkingAccount->formatted_amount }}</td>
-                                            <td style="white-space: nowrap;">
-                                                <form action="{{ route('checking-accounts.destroy',$checkingAccount->id) }}" method="POST">
-                                                
-                                                    <a class="btn btn-sm btn-warning" href="{{ route('services.showServicesPerAccount', ['id' => $checkingAccount->id]) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Ver servicios') }}</a>
-                                                    <a class="btn btn-sm btn-warning" href="{{ route('payments.showPaymentsPerAccount', ['id' => $checkingAccount->id]) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Ver pagos') }}</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('checking-accounts.edit',$checkingAccount->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
-                                                    
 
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Eliminar') }}</button>
-                                                </form>
+                                            <td style="white-space: nowrap;">
+                                            
+                                                <!-- Editar Cuenta Corriente -->
+                                                <div class="d-inline-block">
+                                                    <a class="btn btn-sm btn" href="{{ route('checking-accounts.edit',$checkingAccount->id) }}"><i class="fa fa-fw fa-edit"></i></a>
+                                                </div>
+
+                                                <!-- Eliminar Cuenta Corriente -->
+                                                <div class="d-inline-block">
+                                                    <form id="delete-button-general" action="{{ route('checking-accounts.destroy',$checkingAccount->id) }}" method="POST" class="d-inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn btn-sm"><i class="fa fa-fw fa-trash"></i></button>
+                                                    </form>
+                                                </div>
+                                                <!-- Ver servicios y pagos -->
+                                                <a class="btn btn-sm btn-warning" href="{{ route('services.showServicesPerAccount', ['id' => $checkingAccount->id]) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Ver servicios') }}</a>
+                                                <a class="btn btn-sm btn-warning" href="{{ route('payments.showPaymentsPerAccount', ['id' => $checkingAccount->id]) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Ver pagos') }}</a>
                                             </td>
+
+
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -97,29 +102,7 @@
                             <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script> <!-- Agregado para los botones -->
                             <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script> <!-- Agregado para los botones -->
                             <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script> <!-- Agregado para los botones -->
-                            <script>
-                                    $(document).ready(function(){
-                                        $('#dataTable').DataTable({
-                                            "ordering": true,
-                                            "order": [],
-                                            "language": {
-                                                // ... configuración de idioma ...
-                                            },
-                                            "dom": 'Blfrtip',
-                                            "buttons": [
-                                                'copy',
-                                                'excel',
-                                                'csv',
-                                                'pdf',
-                                                'print'
-                                            ],
-                                            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-                                            "columnDefs": [
-                                                { "targets": 'no-export', "searchable": false, "orderable": false, "visible": false }
-                                            ]
-                                        });
-                                    });
-                                </script>
+                            
                             @endsection
                             
                         </div>

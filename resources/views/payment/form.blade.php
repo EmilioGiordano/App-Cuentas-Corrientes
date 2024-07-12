@@ -3,11 +3,10 @@
 
 
         <!-- Muestra el monto total del servicio -->
-        <h4>Monto total del servicio: {{'$ ' . $service->formatted_monto}}</h4>
+        <h4><strong>Monto total: {{'$ ' . $service->formatted_monto}}</strong></h4>
         <!-- Muestra el saldo pendiente del servicio -->
-        <h4>Saldo pendiente: {{'$ ' . $service->formatted_saldoPendiente}}
-            <button class="btn btn-success copy-btn ml-3" data-value="{{$service->saldo_pendiente}}">Pagar restante</button>
-        </h4>
+        <h4><strong>Saldo pendiente: {{'$ ' . $service->formatted_saldoPendiente}}
+        </strong></h4>
 
     
         <!-- Mostrar detalles del checking account -->
