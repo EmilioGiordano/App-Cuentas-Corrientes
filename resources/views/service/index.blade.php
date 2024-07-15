@@ -8,7 +8,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 @endsection
-
+<!-- blade.php que contiene las dependencias, necesario en los index -->
+@extends('datatable-dependencies') 
 @section('template_title')
     Service
 @endsection
@@ -45,7 +46,7 @@
 
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-hover" id='dataTable'>
+                            <table class="table table-hover" id='dataTable' class="display" cellspacing="0" width="100%">
                                 <thead class="thead">
                                     <tr>
                                         <th>Servicio</th>
@@ -74,7 +75,6 @@
                                             @else
                                             <span class="badge badge-pago">
                                                 <i class="fa-solid fa-circle-check badge-icon"></i> Pagado
-                                                
                                             </span>                                            
                                             @endif
                                         </td>
@@ -115,26 +115,8 @@
                                         </td>
                                     </tr>
                                 @endforeach
-                            </tbody>
-
+                                </tbody>
                             </table>
-
-                            @section('js')
-
-                            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-                            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-                            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-                            
-                            <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-                            <script src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
-                            <script src="https://cdn.datatables.net/2.0.1/js/dataTables.bootstrap5.js"></script>
-                            <script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script> <!-- Agregado para los botones -->
-                            <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script> <!-- Agregado para los botones -->
-                            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script> <!-- Agregado para los botones -->
-                            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script> <!-- Agregado para los botones -->
-                            <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script> <!-- Agregado para los botones -->
-                            @endsection
-
                         </div>
                     </div>
                 </div>

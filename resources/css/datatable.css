@@ -1,6 +1,43 @@
-.btn-exportar-opcion{
-    background-color: hsl(208, 26%, 59%);
-    border-radius: 10px;
-   }
+/* Primer boton */
+.btn-exportar{
 
+}
+/* Opciones desplegable */
+.btn-exportar-opcion{
+    background-color: hwb(207 75% 11%);
    
+}
+
+
+.dt-down-arrow{
+    /* visibility: hidden; */
+}
+.top{
+    margin-top: 20px;
+    margin-bottom: 20px; 
+}
+.dt-buttons{
+    /* EXPORTAR */
+    float: right;
+}
+.dt-length {
+    /* MOSTRAR N REGISTROS */
+    float: left;
+    margin-left: 10px;
+  
+}
+
+
+.bottom{
+    margin-top: 20px;
+    margin-bottom: 20px; 
+}
+.bottom .dt-pagination {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+    
+
+
+
+

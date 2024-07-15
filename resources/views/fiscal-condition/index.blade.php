@@ -9,7 +9,8 @@
 
 @endsection
 
-
+<!-- blade.php que contiene las dependencias, necesario en los index -->
+@extends('datatable-dependencies') 
 @section('template_title')
     Fiscal Condition
 @endsection
@@ -59,12 +60,20 @@
 											<td>{{ $fiscalCondition->nombre_categoria }}</td>
 
                                             <td>
-                                                <form action="{{ route('fiscal-conditions.destroy',$fiscalCondition->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-success" href="{{ route('fiscal-conditions.edit',$fiscalCondition->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Editar') }}</a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Eliminar') }}</button>
-                                                </form>
+                                                <!-- Editar -->
+                                                <div class="d-inline-block">
+                                                    <a class="btn btn-sm btn" href="{{ route('fiscal-conditions.edit',$fiscalCondition->id) }}"><i class="fa fa-fw fa-edit"></i></a>
+                                                </div>
+                                                <!-- Eliminar -->
+                                                <div class="d-inline-block">
+                                                    <form id="delete-button-general" action="{{ route('fiscal-conditions.destroy',$fiscalCondition->id) }}" method="POST" class="d-inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn btn-sm"><i class="fa fa-fw fa-trash"></i></button>
+                                                    </form>
+                                                </div>
+                                                
+                                                
                                             </td>
                                         </tr>
                                     @endforeach

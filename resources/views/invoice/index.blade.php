@@ -10,6 +10,8 @@
 
 
 @endsection
+<!-- blade.php que contiene las dependencias, necesario en los index -->
+@extends('datatable-dependencies') 
 
 @section('template_title')
     Invoice
@@ -40,7 +42,7 @@
 
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-hover" id='dataTable'>
+                            <table class="table table-hover" id='dataTable' class="display" cellspacing="0" width="100%">
                                 <thead class="thead">
                                     <tr>
                                        
@@ -80,17 +82,6 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            
-                            @section('js')
-                            <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-                            <script src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
-                            <script src="https://cdn.datatables.net/2.0.1/js/dataTables.bootstrap5.js"></script>
-                            <script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script> <!-- Agregado para los botones -->
-                            <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script> <!-- Agregado para los botones -->
-                            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script> <!-- Agregado para los botones -->
-                            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script> <!-- Agregado para los botones -->
-                            <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script> <!-- Agregado para los botones -->
-                            @endsection
                         </div>
                     </div>
                 </div>

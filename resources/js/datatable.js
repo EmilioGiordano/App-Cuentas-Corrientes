@@ -1,16 +1,20 @@
-$(document).ready(function(){
-    $('#dataTable').DataTable({
+$(document).ready(function() {
+    var table = $('#dataTable').DataTable({
+        
         "ordering": true,
         "order": [],
         "language": {
-            // ... configuración de idioma ...
+            "sLengthMenu":    "Mostrar _MENU_ registros",
+            "sEmptyTable":    "Ningún dato disponible en esta tabla",
+            "sEmptyTable":    "Ningún dato disponible en esta tabla",
+            "sSearch":        "Buscar:",
         },
-        "dom": '<"top"B>rt<"bottom"lp><"clear">',
+        "dom": '<"top"lf>rt<"bottom"Bp><"clear">',
         "buttons": [
-            {
+            {   
                 extend: 'collection',
-                text: 'Exportar <i class="fa-solid fa-file-export"></i>', // Utiliza el ícono en lugar del texto
-                className: 'btn-exportar', // Clase personalizada
+                text: 'Exportar <i class="fa-solid fa-file-export"></i>',
+                className: 'btn-exportar',
                 buttons: [
                     { extend: 'copy', text: 'Copiar', className: 'btn-exportar-opcion' },
                     { extend: 'excel', text: 'Excel', className: 'btn-exportar-opcion' },
@@ -19,9 +23,9 @@ $(document).ready(function(){
                 ]
             }
         ],
-        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
         "columnDefs": [
             { "targets": 'no-export', "searchable": false, "orderable": false, "visible": false }
         ]
     });
-    });
+});

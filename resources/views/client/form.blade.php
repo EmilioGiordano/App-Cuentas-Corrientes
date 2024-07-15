@@ -1,8 +1,6 @@
 <div class="box box-info padding-1">
     <div class="box-body">
-        
-        
-       
+
         <div class="form-group">
             {{ Form::label('nombre') }}
             {{ Form::text('nombre', $client->nombre, ['class' => 'form-control' . ($errors->has('nombre') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese el nombre']) }}
@@ -33,12 +31,6 @@
             {{ Form::text('telefono', $client->telefono, ['class' => 'form-control' . ($errors->has('telefono') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese el telefono']) }}
             {!! $errors->first('telefono', '<div class="invalid-feedback">:message</div>') !!}
         </div>
-<!-- 
-        <div class="form-group">
-            {{ Form::label('detalles') }}
-            {{ Form::text('detalles', $client->detalles, ['class' => 'form-control' . ($errors->has('detalles') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese los detalles']) }}
-            {!! $errors->first('detalles', '<div class="invalid-feedback">:message</div>') !!}
-        </div> -->
 
         <div class="form-group">
             {{ Form::label('Condición Fiscal') }}

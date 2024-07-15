@@ -3,7 +3,8 @@
 @section('template_title')
     {{ $checkingAccount->name ?? "{{ __('Show') Checking Account" }}
 @endsection
-
+<!-- Scripts -->
+@vite(['resources/js/datatable.js', 'resources/css/services-index-badge.css'])
 @section('content')
     <section class="content container-fluid">
         <div class="row">
@@ -66,14 +67,20 @@
                 </div>
             </div>
             <div class="col-md-1"></div>
-            <div class="col-md-7">
-                <p>2/6/2024</p>
+            <div class="col-md-6">
+                <p><strong>2/6/2024</strong></p>
                 <hr>
+                <p><strong>Servicio</strong><span class="badge badge-pago"><i class="fa-solid fa-circle-check badge-icon"></i> Pagado</span> </p>
                 <p>Detalles del servicio</p>
 
                 
-                
+                <br>
+                <p><strong>2/6/2024</strong></p>
+                <hr>
+                <p><strong>Servicio </strong><span class="badge badge-pendiente"><i class="fa-solid fa-circle-check badge-icon"></i> Pagado</span></p>                                         
+                <p>Detalles del Pago</p>
             </div>
+            
 
         </div>
     </section>

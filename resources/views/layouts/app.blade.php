@@ -8,18 +8,14 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
     <title>@yield('title', config('app.name', 'Laravel'))</title>
-
-
      <!-- CSS -->
      @yield('css')
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-    
-
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/js/delete-button.js', 'resources/css/datatable.css'])
+    @vite(['resources/sass/app.scss', 'resources/css/navbar.css', 'resources/js/app.js', 'resources/js/delete-button.js', 'resources/css/datatable.css'])
 
 </head>
 <body>
@@ -35,40 +31,37 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <!-- LINK NAV BAR A EMPLEADOS -->
                     <ul class="navbar-nav me-auto">
-                        
-                       
-
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('clients.index') }}">{{ __('Clientes') }}</a>    
+                            <a class="nav-link {{ Route::currentRouteName() == 'clients.index' ? 'active' : '' }}" href="{{ route('clients.index') }}">{{ __('Clientes') }}</a>    
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('checking-accounts.index') }}">{{ __('Cuentas ') }}</a>    
+                            <a class="nav-link {{ Route::currentRouteName() == 'checking-accounts.index' ? 'active' : '' }}" href="{{ route('checking-accounts.index') }}">{{ __('Cuentas ') }}</a>    
                         </li>
                         
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('fiscal-conditions.index') }}">{{ __('Condiciones Fiscales') }}</a>    
+                            <a class="nav-link {{ Route::currentRouteName() == 'fiscal-conditions.index' ? 'active' : '' }}" href="{{ route('fiscal-conditions.index') }}">{{ __('Condiciones Fiscales') }}</a>    
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('services.index') }}">{{ __('Servicios') }}</a>    
+                            <a class="nav-link {{ Route::currentRouteName() == 'services.index' ? 'active' : '' }}" href="{{ route('services.index') }}">{{ __('Servicios') }}</a>    
                         </li>
                         
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('invoices.index') }}">{{ __('Facturas C') }}</a>    
+                            <a class="nav-link {{ Route::currentRouteName() == 'invoices.index' ? 'active' : '' }}" href="{{ route('invoices.index') }}">{{ __('Facturas C') }}</a>    
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('payments.index') }}">{{ __('Pagos') }}</a>    
+                            <a class="nav-link {{ Route::currentRouteName() == 'payments.index' ? 'active' : '' }}" href="{{ route('payments.index') }}">{{ __('Pagos') }}</a>    
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('receipts.index') }}">{{ __('Recibos de pagos') }}</a>    
+                            <a class="nav-link {{ Route::currentRouteName() == 'receipts.index' ? 'active' : '' }}" href="{{ route('receipts.index') }}">{{ __('Recibos de pagos') }}</a>    
                         </li>
-                        @endauth
+                    </ul>
+                </div>
+                @endauth
                     </ul>
                       <ul class="navbar-nav me-auto">
                     </ul>
@@ -99,13 +92,13 @@
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('NewPassword') }}">
-                                            {{ __('Edit Profile') }}
+                                            {{ __('Editar Perfil') }}
                                         </a>
                                             
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('Cerrar sesión') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
