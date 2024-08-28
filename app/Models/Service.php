@@ -42,6 +42,7 @@ class Service extends Model
      * @var array
      */
     protected $fillable = ['id_cuenta','monto','saldo_pendiente','detalles','fecha'];
+    protected $appends = ['has_payments'];
   
     public function checkingAccount()
     {
@@ -60,6 +61,11 @@ class Service extends Model
         return $this->hasOne('App\Models\Invoice', 'id_servicio', 'id');
     }
     
+    //$appends 'has_payments'
+    public function getHasPaymentsAttribute()
+    {
+        return $this->payments()->exists();
+    }
 
     protected static function boot()
     {

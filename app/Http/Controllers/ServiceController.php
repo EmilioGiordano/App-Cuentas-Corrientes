@@ -22,20 +22,20 @@ class ServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-public function index()
-{
-
+    public function index()
+    {
+    $i = 0;
     // Obtener el ID del usuario actualmente autenticado
     $userId = Auth::id();
 
     // Obtener los servicios asociados a las cuentas de los clientes del usuario actual
     $services = Service::whereHas('checkingAccount.client.user', function ($query) use ($userId) {
         $query->where('id', $userId);
-    })->orderBy('created_at', 'desc')->paginate();
+    })->orderBy('created_at', 'desc')->get();
 
-    return view('service.index', compact('services'))
-        ->with('i', (request()->input('page', 1) - 1) * $services->perPage());
-}
+    return view('service.index', compact('services', 'i'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -60,11 +60,13 @@ public function index()
 
         $userId = Auth::id();
         $service = Service::find($id);
+        $hasPayments = $service->payments()->exists();
+
         $checking_account = CheckingAccount::whereHas('client.user', function ($query) use ($userId) {
             $query->where('id', $userId);
         })->pluck('nombre', 'id');
 
-        return view('service.edit', compact('service', 'checking_account'));
+        return view('service.edit', compact('service', 'checking_account', 'hasPayments'));
     }
 
 

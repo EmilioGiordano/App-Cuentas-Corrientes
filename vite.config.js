@@ -6,13 +6,14 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/sass/app.scss',
-                'resouces/css/navbar.css',
+                'resources/css/navbar.css',
+                'resources/css/services-index-badge.css',
+                'resources/css/services-index-edit-disabled.css',
                 'resources/js/app.js',
                 'resources/js/delete-button.js',
+                'resources/js/edit-service-button.js',
                 'resources/css/datatable.css',
-                'resources/css/service-index-badge.css',
-                'resources/css/datatable.js',
-                
+                'resources/js/datatable.js',
             ],
             refresh: true,
         }),
