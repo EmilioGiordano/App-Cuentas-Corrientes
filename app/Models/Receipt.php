@@ -42,15 +42,19 @@ class Receipt extends Model
     {
         return $this->hasOne('App\Models\Payment', 'id', 'id_pago');
     }
+    public function client()
+    {
+        return $this->service->belongsTo('App\Models\Client', 'id_cliente', 'id');
+    }
     
 
     public function getFileName()
     {
-      $payment = $this->payment;
-      $client = $payment->checkingAccount->client;
-      $cuitCuil = $client->cuitcuil;
+      $service = $this->service;
+      $clientAccountName = $service->checkingAccount->nombre;
+     
       
-      $file_name = "{$cuitCuil}_recibo_{$payment->id}.pdf";
+      $file_name = "{$clientAccountName}_recibo_{$service->id}.pdf";
       return $file_name;
     }
 }

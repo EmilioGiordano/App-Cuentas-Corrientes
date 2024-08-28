@@ -21,11 +21,10 @@ class ClientController extends Controller
         // Obtener el ID del usuario actualmente autenticado
         $userId = Auth::id();
 
-        // Obtener solo los clientes asociados al usuario actual
-        $clients = Client::where('id_user', $userId)->paginate();
+        // Obtener todos los clientes asociados al usuario actual
+        $clients = Client::where('id_user', $userId)->get();
 
-        return view('client.index', compact('clients'))
-            ->with('i', (request()->input('page', 1) - 1) * $clients->perPage());
+        return view('client.index', compact('clients'));
     }
 
     public function create()

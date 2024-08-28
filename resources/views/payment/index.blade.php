@@ -1,14 +1,10 @@
 @extends('layouts.app')
 
-@section('css')
-<link href="https://cdn.datatables.net/2.0.1/css/dataTables.bootstrap5.css" rel="stylesheet">
-<link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
+<!-- Scripts -->
+@vite(['resources/js/datatable.js'])
 
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-
-@endsection
+<!-- blade.php que contiene las dependencias, necesario en los index -->
+@extends('datatable-dependencies') 
 
 @section('template_title')
     Payment
@@ -41,30 +37,28 @@
 
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-hover" id='dataTable'>
+                            <table class="table table-hover" id='dataTable' class="display" cellspacing="0" width="100%">
                                 <thead class="thead">
                                     <tr>
-                                        <th>#</th>
-                                        
+                                        <th>Índice</th>
 										<th>Cuenta asociada</th>
-										<th>Detalles del servicio</th>
+                                        <th>Fecha</th>
+                                        <th>Detalles del pago</th>
 										<th>Monto</th>
-										<th>Detalles del pago</th>
-										<th>Fecha</th>
-                                        <th>Acciones</th>
-                                      
+										
+								
+                                        <th>Acciones</th>      
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($payments as $payment)
                                         <tr>
-                                            <td>{{ ++$i }}</td>
-                                            
-											<td>{{ $payment->checkingAccount->nombre }}</td>
-											<td>{{ $payment->Service->detalles }}</td>
-											<td>{{  '$'.$payment->FormattedMonto }}</td>
-											<td>{{ $payment->detalles }}</td>
-											<td style="white-space: nowrap;">{{ $payment->fecha }}</td>
+                                            <td>{{'Pago - ' . ++$i }}</td>                                            
+											<td style="white-space: nowrap; font-weight: bold">{{ $payment->checkingAccount->nombre }}</td>
+                                            <td style="white-space: nowrap;">{{ $payment->fecha }}</td>
+                                            <td>{{ $payment->detalles }}</td>
+                                            <td>{{'$'.$payment->monto }}</td>
+											
                                             <td style="white-space: nowrap;">
                                             <!-- Eliminar Recibo -->
                                                 <div class="d-inline-block">
@@ -80,20 +74,14 @@
                                                 <form action="{{ route('receipts.create') }}" method="POST" target="_blank" style="display: inline;">
                                                     @csrf
                                                     <input type="hidden" name="id_pago" value="{{ $payment->id }}">
-                                                    <button type="submit" class="btn btn-sm btn"><i class="fa-solid fa-download"></i></button>
-                                                        
-                                                    </button>
+                                                    <button type="submit" class="btn btn-sm btn"><i class="fa-solid fa-download"></i></button>     
+                                                    
                                                 </form>
-                                                
                                             </td>
-
-                                            
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
-
-
                             @section('js')
                             <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
                             <script src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
@@ -103,15 +91,10 @@
                             <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script> <!-- Agregado para los botones -->
                             <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script> <!-- Agregado para los botones -->
                             <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script> <!-- Agregado para los botones -->
-
                             @endsection
-
-
-
                         </div>
                     </div>
                 </div>
-                {!! $payments->links() !!}
             </div>
         </div>
     </div>

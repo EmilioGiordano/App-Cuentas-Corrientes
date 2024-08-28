@@ -26,18 +26,8 @@ class Invoice extends Model
     ];
 
     protected $perPage = 20;
-
-    /**
-     * Attributes that should be mass-assignable.
-     *
-     * @var array
-     */
     protected $fillable = ['id_servicio','file_name'];
 
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
     public function service()
     {
         return $this->hasOne('App\Models\Service', 'id', 'id_servicio');
@@ -51,10 +41,10 @@ class Invoice extends Model
     public function getFileName()
     {
       $service = $this->service;
-      $client = $service->checkingAccount->client;
-      $cuitCuil = $client->cuitcuil;
+      $clientAccountName = $service->checkingAccount->nombre;
+     
       
-      $file_name = "{$cuitCuil}_factura_{$service->id}.pdf";
+      $file_name = "{$clientAccountName}_factura_{$service->id}.pdf";
       return $file_name;
     }
 }

@@ -16,17 +16,17 @@ class PaymentController extends Controller
 {
     public function index()
     {
-
+        // Contador de entidades
+        $i = 0; 
         // Obtener el ID del usuario actualmente autenticado
         $userId = Auth::id();
 
         // Obtener los servicios asociados a las cuentas de los clientes del usuario actual
         $payments = Payment::whereHas('checkingAccount.client.user', function ($query) use ($userId) {
             $query->where('id', $userId);
-        })->orderBy('created_at', 'desc')->paginate();
+        })->orderBy('created_at', 'desc')->get();
 
-        return view('payment.index', compact('payments'))
-            ->with('i', (request()->input('page', 1) - 1) * $payments->perPage());
+        return view('payment.index', compact('payments', 'i'));
     }
 
     public function create($service_id, $cuenta_id)

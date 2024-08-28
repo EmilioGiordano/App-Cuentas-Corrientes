@@ -1,21 +1,16 @@
 @extends('layouts.app')
 
-@section('css')
-<link href="https://cdn.datatables.net/2.0.1/css/dataTables.bootstrap5.css" rel="stylesheet">
-<link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<!-- Scripts -->
+@vite(['resources/js/datatable.js'])
 
-@endsection
 <!-- blade.php que contiene las dependencias, necesario en los index -->
 @extends('datatable-dependencies') 
+
 
 @section('template_title')
     Checking Account
 @endsection
-
-<!-- Scripts -->
-@vite(['resources/js/datatable.js'])
-@section('title', 'Listado de cuentas')
+@section('title', 'Listado de clientes')
 
 @section('content')
     <div class="container-fluid">
@@ -44,6 +39,7 @@
                                     <tr>
 										<th>Nombre de la cuenta</th>
                                         <th>Propietario</th>
+                                        <th>Domicilio Fiscal</th>
                                         <th>Condicion Fiscal</th>
 										<th>Saldo a pagar</th>
                                         <th>Acciones</th>
@@ -53,7 +49,8 @@
                                     @foreach ($checkingAccounts as $checkingAccount)
                                         <tr>                                            
                                             <td>{{ $checkingAccount->nombre }}</td>
-                                            <td>{{ $checkingAccount->client->nombre . ' ' .$checkingAccount->client->apellido }}</td>       
+                                            <td>{{ $checkingAccount->client->nombre . ' ' .$checkingAccount->client->apellido }}</td> 
+                                            <td>{{ $checkingAccount->direccion_fiscal}}</td>      
                                             <td>{{ $checkingAccount->client->FiscalCondition->nombre_categoria }}</td>
                                             <td>{{'$'. $checkingAccount->saldo_a_pagar }}</td>
                                             <td style="white-space: nowrap;">
@@ -82,7 +79,7 @@
                         </div>
                     </div>
                 </div>
-                {!! $checkingAccounts->links() !!}
+                
             </div>
         </div>
     </div>

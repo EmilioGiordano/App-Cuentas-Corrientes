@@ -15,7 +15,7 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/css/navbar.css', 'resources/js/app.js', 'resources/js/delete-button.js', 'resources/css/datatable.css'])
+    @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/js/delete-button.js', 'resources/css/datatable.css'])
 
 </head>
 <body>

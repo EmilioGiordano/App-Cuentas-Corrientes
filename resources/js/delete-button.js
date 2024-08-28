@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault(); // Evita el envío automático del formulario
         
         Swal.fire({
-            title: '¿Estás seguro?',
-            text: '¿Estás seguro de que deseas eliminar este elemento?\n\nEste cambio es irreversible ',
+            title: '¿Está seguro?',
+            html: '¿Está seguro de que desea eliminar este elemento?<br><span style="display:inline-block; margin-top: 5px;">Este cambio es irreversible y puede afectar otras tablas.</span>',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

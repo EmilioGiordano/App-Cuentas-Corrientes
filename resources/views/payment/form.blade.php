@@ -117,7 +117,7 @@ var defaultDetailsBtn = document.getElementById('defaultDetailsBtn');
 // Agregar un event listener al botón
 defaultDetailsBtn.addEventListener('click', function() {
     // Obtener el valor de los detalles del servicio
-    var serviceDetails = 'Pago de Servicio de ' + "{{$service->detalles}}";
+    var serviceDetails = 'Pago de ' + "{{$service->detalles}}";
     
     // Asignar los detalles predeterminados al campo de detalles
     document.getElementById('detalles').value = serviceDetails;

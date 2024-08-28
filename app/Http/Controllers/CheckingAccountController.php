@@ -1,27 +1,18 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Support\Facades\DB;      //Usado para mostrar nombre y apellido en cuenta.form
-
 use App\Models\CheckingAccount;
 use App\Models\FiscalCondition;
 use App\Models\Client;
 use App\Models\Service;
 use App\Models\Payment;
-
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
-/**
- * Class CheckingAccountController
- * @package App\Http\Controllers
- */
 class CheckingAccountController extends Controller
 {
-
     public function index()
     {
         // Obtener el ID del usuario actualmente autenticado
@@ -30,28 +21,24 @@ class CheckingAccountController extends Controller
         // Obtener las cuentas corrientes asociadas al usuario actual
         $checkingAccounts = CheckingAccount::whereHas('client.user', function ($query) use ($userId) {
             $query->where('id', $userId);
-        })->paginate();
+        })->get();
 
-         // Calcular la suma de los saldos pendientes por cuenta
+        // Calcular la suma de los saldos pendientes por cuenta
         $totalSaldosPorCuenta = [];
 
         foreach ($checkingAccounts as $checkingAccount) {
             $totalSaldosPorCuenta[$checkingAccount->id] = $checkingAccount->services()->sum('saldo_pendiente');
             $checkingAccount->saldo_a_pagar = $totalSaldosPorCuenta[$checkingAccount->id];
         }
-
-        return view('checking-account.index', compact('checkingAccounts', 'totalSaldosPorCuenta'))
-            ->with('i', (request()->input('page', 1) - 1) * $checkingAccounts->perPage());
+        return view('checking-account.index', compact('checkingAccounts', 'totalSaldosPorCuenta'));
     }
 
     public function create()
     {
         // Obtener el ID del usuario actualmente autenticado
         $userId = Auth::id();
-    
         // Obtener los clientes asociados al usuario actual
         $client = Client::where('id_user', $userId)->first(); // Obtener el primer cliente
-        
         $checkingAccount = new CheckingAccount();
         
         return view('checking-account.create', compact('checkingAccount', 'client'));
@@ -62,9 +49,8 @@ class CheckingAccountController extends Controller
         // Obtener el ID del usuario actualmente autenticado
         $userId = Auth::id();
         $client = Client::findOrFail($client_id);
-
         $checkingAccount = new CheckingAccount();
-        
+
         return view('checking-account.create', compact('checkingAccount', 'client'));
     }
 
@@ -73,7 +59,6 @@ class CheckingAccountController extends Controller
         // Obtener el ID del usuario actualmente autenticado
         $userId = Auth::id();
         $client = Client::findOrFail($client_id);
-
         $checkingAccount = new CheckingAccount();
         
         return view('checking-account.create', compact('checkingAccount', 'client'));

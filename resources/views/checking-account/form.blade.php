@@ -9,8 +9,14 @@
 
         <div class="form-group">
             {{ Form::label('nombre') }}
-            {{ Form::text('nombre', $checkingAccount->nombre, ['class' => 'form-control' . ($errors->has('nombre') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese un nombre para la cuenta corriente']) }}
+            {{ Form::text('nombre', $checkingAccount->nombre, ['class' => 'form-control' . ($errors->has('nombre') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese el nombre de la cuenta corriente']) }}
             {!! $errors->first('nombre', '<div class="invalid-feedback">:message</div>') !!}
+        </div>
+
+        <div class="form-group">
+            {{ Form::label('direccion_fiscal') }}
+            {{ Form::text('direccion_fiscal', $checkingAccount->direccion_fiscal, ['class' => 'form-control' . ($errors->has('nombre') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese la dirección de la cuenta corriente']) }}
+            {!! $errors->first('direccion_fiscal', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     
 

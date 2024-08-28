@@ -27,7 +27,6 @@ class CheckingAccount extends Model
     static $rules = [
 		'id_cliente' => 'required',
 		'nombre' => 'required',
-		
     ];
 
     protected $perPage = 20;
@@ -37,7 +36,7 @@ class CheckingAccount extends Model
      *
      * @var array
      */
-    protected $fillable = ['id_cliente','nombre','saldo_a_pagar'];
+    protected $fillable = ['id_cliente','nombre', 'direccion_fiscal', 'saldo_a_pagar'];
 
 
     /**
@@ -63,8 +62,6 @@ class CheckingAccount extends Model
     {
         return $this->hasMany('App\Models\Service', 'id_cuenta', 'id');
     }
-
-
    
     protected static function boot()
     {

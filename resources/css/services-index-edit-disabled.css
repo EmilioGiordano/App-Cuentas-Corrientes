@@ -1,0 +1,17 @@
+#edit-service-button-disabled {
+    color: #ff0000; /* Color rojo para el ícono */
+    /* opacity: 0.5; Reduce la opacidad para dar una apariencia de deshabilitado */
+    cursor: not-allowed; /* Cambia el cursor para indicar que no está disponible */
+    position: relative; /* Permite el uso de pseudo-elementos */
+}
+
+#edit-service-button-disabled::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2px;
+    height: 100%;
+    background-color: black; /* Color de la línea de "tachado" */
+    transform: translate(-50%, -50%) rotate(-45deg); /* Centra y rota la línea en dirección contraria */
+}

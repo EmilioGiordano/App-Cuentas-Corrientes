@@ -22,7 +22,7 @@
 }
 .dt-length {
     /* MOSTRAR N REGISTROS */
-    float: left;
+    float: center;
     margin-left: 10px;
   
 }
@@ -40,4 +40,18 @@
 
 
 
+.pagination {
+  
+    display: flex;
+    justify-content: center;
+    padding-left: 0;
+    list-style: none;
+}
 
+.pagination li {
+    display: inline;
+}
+
+.pagination a {
+    text-decoration: none;
+}

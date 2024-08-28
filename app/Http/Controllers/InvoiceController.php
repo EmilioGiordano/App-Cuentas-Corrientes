@@ -1,23 +1,12 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-/**
- * Class InvoiceController
- * @package App\Http\Controllers
- */
 class InvoiceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         // Obtener el ID del usuario actualmente autenticado
@@ -26,10 +15,9 @@ class InvoiceController extends Controller
         // Obtener los recibos asociados a las cuentas de los clientes del usuario actual
         $invoices = Invoice::whereHas('service.checkingAccount.client.user', function ($query) use ($userId) {
             $query->where('id', $userId);
-        })->paginate();
+        })->get();
 
-        return view('invoice.index', compact('invoices'))
-            ->with('i', (request()->input('page', 1) - 1) * $invoices->perPage());
+        return view('invoice.index', compact('invoices'));
     }
     
     public function create(Request $request)
