@@ -37,8 +37,20 @@ class CheckingAccount extends Model
      * @var array
      */
     protected $fillable = ['id_cliente','nombre', 'direccion_fiscal', 'saldo_a_pagar'];
+    protected $appends = ['services_ammount', 'payments_ammount'];
 
+    // Contador de Servicios por Cuenta Corriente
+    public function getServicesAmmountAttribute()
+    {
+        return $this->services()->count();
+    }
 
+    // Contador de pagos por Cuenta Corriente
+    public function getPaymentsAmmountAttribute()
+    {
+        return $this->payments()->count();
+    }
+    
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
@@ -62,7 +74,7 @@ class CheckingAccount extends Model
     {
         return $this->hasMany('App\Models\Service', 'id_cuenta', 'id');
     }
-   
+       
     protected static function boot()
     {
         parent::boot();
@@ -83,7 +95,4 @@ class CheckingAccount extends Model
         // Formatear el monto usando el formato específico
         return number_format($this->saldo_a_pagar, 2, ',', '.'); // 2 decimales, coma como separador decimal, punto como separador de miles
     }
-
-    
-
 }
