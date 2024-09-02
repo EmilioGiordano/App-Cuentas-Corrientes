@@ -25,7 +25,6 @@ use Carbon\Carbon;
  */
 class Service extends Model
 {
-    
     static $rules = [
 		'id_cuenta' => 'required',
 		'monto' => 'required',
@@ -38,7 +37,6 @@ class Service extends Model
 
     /**
      * Attributes that should be mass-assignable.
-     *
      * @var array
      */
     protected $fillable = ['id_cuenta','monto','saldo_pendiente','detalles','fecha'];
@@ -62,6 +60,7 @@ class Service extends Model
     }
     
     //$appends 'has_payments'
+    //Utilizado en services index para el boton de Editar.
     public function getHasPaymentsAttribute()
     {
         return $this->payments()->exists();

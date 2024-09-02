@@ -26,15 +26,13 @@ class Receipt extends Model
     ];
 
     protected $perPage = 20;
-
-    /**
-     * Attributes that should be mass-assignable.
-     *
-     * @var array
-     */
     protected $fillable = ['id_pago','file_name'];
+    protected $appends = ['receipt_number'];
 
-
+    public function getReceiptNumberAttribute()
+    {
+      return $this->payment->checkingAccount->payments_ammount;
+    }
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
@@ -47,14 +45,12 @@ class Receipt extends Model
         return $this->service->belongsTo('App\Models\Client', 'id_cliente', 'id');
     }
     
-
     public function getFileName()
     {
-      $service = $this->service;
-      $clientAccountName = $service->checkingAccount->nombre;
-     
+      $payment = $this->payment;
+      $clientAccountName = $payment->checkingAccount->nombre;
+   
+      return $file_name = "{$clientAccountName}_factura_{$this->receipt_number}.pdf";
       
-      $file_name = "{$clientAccountName}_recibo_{$service->id}.pdf";
-      return $file_name;
     }
 }

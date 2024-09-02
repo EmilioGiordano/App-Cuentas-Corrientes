@@ -24,7 +24,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Payment extends Model
 {
-    
     static $rules = [
 		'id_cuenta' => 'required',
 		'id_servicio' => 'required',
@@ -32,9 +31,7 @@ class Payment extends Model
 		'detalles' => 'required|min:5|max:255',
 		'fecha' => 'required',
     ];
-
     protected $perPage = 20;
-
     /**
      * Attributes that should be mass-assignable.
      *
@@ -89,6 +86,12 @@ class Payment extends Model
 
         // Obtener la cuenta asociada al servicio
         $checkingAccount = $service->checkingAccount;
+
+        // Crear un Invoice asociado al nuevo Service
+        $receipt = new Receipt();
+        $receipt->id_pago = $payment->id;
+        $receipt->file_name = $receipt->getFileName(); // Asumiendo que tienes un método getFileName en Invoice
+        $receipt->save();
 
     });
 

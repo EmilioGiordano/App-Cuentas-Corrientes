@@ -48,8 +48,7 @@ class Invoice extends Model
       $service = $this->service;
       $clientAccountName = $service->checkingAccount->nombre;
      
+      return $file_name = "{$clientAccountName}_recibo_{$this->invoice_number}.pdf";
       
-      $file_name = "{$clientAccountName}_factura_{$this->invoice_number}.pdf";
-      return $file_name;
     }
 }

@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CheckingAccountControllerAPI;
 use App\Http\Controllers\Api\InvoiceControllerAPI;
+use App\Http\Controllers\Api\ReceiptControllerAPI;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,10 +24,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/checkingAccount', [CheckingAccountControllerAPI::class, 'index']);
 Route::get('/checkingAccount/{id}', [CheckingAccountControllerAPI::class, 'show']);
 
-// -------- Invoices Ammount APIs -------- //
+// -------- Invoices APIs -------- //
 Route::get('/invoice', [InvoiceControllerAPI::class, 'index']);
 // Route::get('/invoice/{id}', [InvoiceControllerAPI::class, 'show']);
 
+// -------- Receipt APIs -------- //
+Route::get('/receipt', [ReceiptControllerAPI::class, 'index']);
+// Route::get('/invoice/{id}', [InvoiceControllerAPI::class, 'show']);
 
 
 
