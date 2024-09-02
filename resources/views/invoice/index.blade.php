@@ -38,12 +38,12 @@
                             <table class="table table-hover" id='dataTable' class="display" cellspacing="0" width="100%">
                                 <thead class="thead">
                                     <tr>
-                                       
+                                        <th>Archivo</th>
                                         <th>Cuenta asociada</th>
                                         <th>Detalles</th>
                                         <th>Monto</th>
                                         <th>Fecha de emisión</th>
-                                        <th>Fecha del servicio</th>
+                                        
 
                                         <th></th>
                                     </tr>
@@ -51,13 +51,12 @@
                                 <tbody>
                                     @foreach ($invoices as $invoice)
                                     <tr>
-                                        <td>{{ now()->format('d-m-Y') }}</td>
+                                        <td>{{ $invoice->file_name }}</td>
+                                        <td>{{ $invoice->service->checkingAccount->nombre }}</td>
                                         <td>{{ $invoice->service->detalles }}</td>
                                         <td>{{ $invoice->service->formatted_monto }}</td>
                                         <td>{{ $invoice->service->fecha }}</td>
-                                        <td>{{ now()->format('d-m-Y') }}</td>                                        
-                                        
-
+                                    
                                         <td style="white-space: nowrap;">
                                             <form action="{{ route('invoices.destroy',$invoice->id) }}" method="POST">
                                                 

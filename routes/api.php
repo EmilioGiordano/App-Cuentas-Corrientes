@@ -25,7 +25,7 @@ Route::get('/checkingAccount/{id}', [CheckingAccountControllerAPI::class, 'show'
 
 // -------- Invoices Ammount APIs -------- //
 Route::get('/invoice', [InvoiceControllerAPI::class, 'index']);
-Route::get('/invoice/{id}', [InvoiceControllerAPI::class, 'show']);
+// Route::get('/invoice/{id}', [InvoiceControllerAPI::class, 'show']);
 
 
 

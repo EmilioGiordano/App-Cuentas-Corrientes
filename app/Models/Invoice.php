@@ -19,7 +19,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Invoice extends Model
 {
-    
     static $rules = [
 		'id_servicio' => 'required',
 		'file_name' => 'required',
@@ -27,6 +26,12 @@ class Invoice extends Model
 
     protected $perPage = 20;
     protected $fillable = ['id_servicio','file_name'];
+    protected $appends = ['invoice_number'];
+
+    public function getInvoiceNumberAttribute()
+    {
+      return $this->service->checkingAccount->services_ammount;
+    }
 
     public function service()
     {
@@ -44,7 +49,7 @@ class Invoice extends Model
       $clientAccountName = $service->checkingAccount->nombre;
      
       
-      $file_name = "{$clientAccountName}_factura_{$service->id}.pdf";
+      $file_name = "{$clientAccountName}_factura_{$this->invoice_number}.pdf";
       return $file_name;
     }
 }
