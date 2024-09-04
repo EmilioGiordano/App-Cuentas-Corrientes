@@ -86,7 +86,10 @@ class Payment extends Model
 
         // Obtener la cuenta asociada al servicio
         $checkingAccount = $service->checkingAccount;
-
+        // Incrementar total de Payments de la cuenta. Utilizado para el numero de Payments
+        $checkingAccount->total_payments += 1;
+        $checkingAccount->save();
+        
         // Crear un Invoice asociado al nuevo Service
         $receipt = new Receipt();
         $receipt->id_pago = $payment->id;

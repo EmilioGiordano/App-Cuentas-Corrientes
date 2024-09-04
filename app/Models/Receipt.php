@@ -50,7 +50,7 @@ class Receipt extends Model
       $payment = $this->payment;
       $clientAccountName = $payment->checkingAccount->nombre;
    
-      return $file_name = "{$clientAccountName}_factura_{$this->receipt_number}.pdf";
+      return $file_name = "{$clientAccountName}_recibo_{$this->receipt_number}.pdf";
       
     }
 }

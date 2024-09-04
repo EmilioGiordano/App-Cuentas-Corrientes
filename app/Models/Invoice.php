@@ -28,11 +28,16 @@ class Invoice extends Model
     protected $fillable = ['id_servicio','file_name'];
     protected $appends = ['invoice_number'];
 
+    // public function getInvoiceNumberAttribute()
+    // {
+    //   return $this->service->checkingAccount->services_ammount;
+    // }
+
     public function getInvoiceNumberAttribute()
     {
-      return $this->service->checkingAccount->services_ammount;
+      return $this->service->checkingAccount->total_services;
     }
-
+    
     public function service()
     {
         return $this->hasOne('App\Models\Service', 'id', 'id_servicio');

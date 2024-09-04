@@ -36,10 +36,10 @@ class CheckingAccount extends Model
      *
      * @var array
      */
-    protected $fillable = ['id_cliente','nombre', 'direccion_fiscal', 'saldo_a_pagar'];
-    protected $appends = ['services_ammount', 'payments_ammount'];
+    protected $fillable = ['id_cliente','nombre', 'direccion_fiscal', 'saldo_a_pagar', 'total_services', 'total_payments'];
+    protected $appends =  ['services_ammount', 'payments_ammount'];
 
-    // Contador de Servicios por Cuenta Corriente
+    // Contador de Servicios por Cuenta Corrientef
     public function getServicesAmmountAttribute()
     {
         return $this->services()->count();

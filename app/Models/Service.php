@@ -78,9 +78,14 @@ class Service extends Model
         static::created(function ($service) {
             // Incrementar saldo_a_pagar en CheckingAccount
             if ($service->checkingAccount) {
+                
+                // Obtener la cuenta asociada al servicio
                 $checkingAccount = $service->checkingAccount;
                 $checkingAccount->saldo_a_pagar += $service->saldo_pendiente;
+                // Incrementar total de Services de la cuenta. Utilizado para el numero de Invoice
+                $checkingAccount->total_services += 1;
                 $checkingAccount->save();
+
 
                 // Crear un Invoice asociado al nuevo Service
                 $invoice = new Invoice();

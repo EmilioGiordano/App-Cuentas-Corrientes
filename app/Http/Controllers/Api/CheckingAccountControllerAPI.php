@@ -22,6 +22,8 @@ class CheckingAccountControllerAPI
             return [
                 'id'=> $checkingAccount->id,
                 'name'=> $checkingAccount->nombre,
+                'Total Services'=> $checkingAccount->total_services,
+                'Total Payments'=> $checkingAccount->total_payments,
                 'services_ammount' => $checkingAccount->services_ammount,
                 'payments_ammount' => $checkingAccount->payments_ammount,
                 'saldo_pendiente' => $checkingAccount->saldo_a_pagar
