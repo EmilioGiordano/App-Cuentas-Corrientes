@@ -16,27 +16,33 @@ $payment = $receipt->payment;
 </head>
 <body>
 
-<div class="invoice-details">
+<div>
+    <!-- Titulo -->
     <p class="tittle">{{ $user->fiscal_name }}</p>
     <p>{{ $user->fiscal_direction}}</p>
 </div>
-<div class="invoice-details">
+<div>
+    <!-- Informacion factura: parte derecha -->
     <p class="tittle">Recibo de pago</p>
     <p>Nro. de comprobante: {{$receipt->receipt_number}}</p>
     <p>Fecha de emisión: {{ \Carbon\Carbon::parse($receipt->payment->fecha)->format('d/m/Y') }}</p>
+</div>    
+    
+<div>
     <!-- EMITIDO A: -->
-        <!-- DATOS DEL CLIENTE -->
-    <br>
+    <!-- DATOS DEL CLIENTE -->
     <p>Emitido a:</p>
     <p>{{ $checkingAccount->nombre }}</p>
     <p>{{ $client->nombre . ' ' . $client->apellido }}  </p>
     <p>{{ $client->fiscalCondition->nombre_categoria}}</p>
-    <p>DETALLES</p>
-    <p> {{ $payment->detalles}} </p>
-    <p>TOTAL</p>
-    <p>${{ $payment->monto }} </p>
-    <p>Firma y autorización</p>
-    
+<div>
+    <!-- TABLA -->
+        <p>DETALLES</p>
+        <p> {{ $payment->detalles}} </p>
+        <p>TOTAL</p>
+        <p>${{ $payment->monto }} </p>
+        <p>Firma y autorización</p>
+    </div>
 </div>
 </body>
 
