@@ -31,7 +31,7 @@ class Receipt extends Model
 
     public function getReceiptNumberAttribute()
     {
-      return $this->payment->checkingAccount->payments_ammount;
+      return $this->payment->checkingAccount->total_payments;
     }
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
