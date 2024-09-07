@@ -5,10 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Carbon\Carbon;
-
 /**
  * Class Service
- *
  * @property $id
  * @property $id_cuenta
  * @property $monto
@@ -17,12 +15,12 @@ use Carbon\Carbon;
  * @property $fecha
  * @property $created_at
  * @property $updated_at
- *
  * @property CheckingAccount $checkingAccount
  * @property Invoice[] $invoices
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
+
 class Service extends Model
 {
     static $rules = [
@@ -32,13 +30,13 @@ class Service extends Model
 		'detalles' => 'required|min:5|max:255',
 		'fecha' => 'required',
     ];
+    
+    protected $casts = [
+        'fecha' => 'datetime',
+        'monto' => 'float',
+    ];
 
     protected $perPage = 20;
-
-    /**
-     * Attributes that should be mass-assignable.
-     * @var array
-     */
     protected $fillable = ['id_cuenta','monto','saldo_pendiente','detalles','fecha'];
     protected $appends = ['has_payments'];
   
@@ -46,21 +44,16 @@ class Service extends Model
     {
         return $this->hasOne('App\Models\CheckingAccount', 'id', 'id_cuenta');
     }
-    
-
-    // Relación a los pagos asociados
     public function payments()
     {
         return $this->hasMany(Payment::class, 'id_servicio');
     }
-    
     public function invoices()
     {
         return $this->hasOne('App\Models\Invoice', 'id_servicio', 'id');
     }
     
-    //$appends 'has_payments'
-    //Utilizado en services index para el boton de Editar.
+    //$appends 'has_payments' - Utilizado en services index para el boton de Editar.
     public function getHasPaymentsAttribute()
     {
         return $this->payments()->exists();
@@ -133,28 +126,21 @@ class Service extends Model
             $checkingAccount->save();
         });
     }
- 
+
+    // Accesor para personalizar el formato de la fecha
     public function getFormattedFromDateAttribute()
     {
-        Carbon::setLocale('es');
-        //MES ABREVIADO return Carbon::parse($this->fecha)->format('d M. Y');
-        return Carbon::parse($this->fecha)->format('d/m/Y');
-    
+        return $this->fecha->format('d/m/Y');
     }
-
+    // Accesor para personalizar el formato del monto
     public function getFormattedMontoAttribute()
     {
-        // Formatear el monto usando el formato específico
-        return number_format($this->monto, 2, ',', '.'); // 2 decimales, coma como separador decimal, punto como separador de milesw
+        return number_format($this->monto, 2, ',', '.');
     }
 
     public function getFormattedSaldoPendienteAttribute()
     {
         // Formatear el monto usando el formato específico
-        return number_format($this->saldo_pendiente, 2, ',', '.'); // 2 decimales, coma como separador decimal, punto como separador de miles
+        return number_format($this->saldo_pendiente, 2, ',', '.');
     }
-
- 
-    
-
 }

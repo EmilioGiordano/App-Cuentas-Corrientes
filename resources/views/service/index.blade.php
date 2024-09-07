@@ -65,17 +65,13 @@
                                     <tr>
                                         <td>{{'Servicio - ' . ++$i }}</td>
                                         <td style="white-space: nowrap; font-weight: bold">{{ $service->checkingAccount->nombre }}</td>
-                                        <td style="white-space: nowrap;">{{ $service->fecha }}</td>
+                                        <td>{{ $service->formatted_from_date }}</td>   <!-- Formateado 'd/m/Y' -->
                                         <td>{{ $service->detalles }}</td>
                                         <td style="text-align: center; font-size: 20px;">
                                             @if ($service->saldo_pendiente != "0.00")
-                                            <span class="badge badge-pendiente">
-                                                <i class="fa-solid fa-circle-exclamation badge-icon"></i> Pendiente
-                                            </span>
+                                            <span class="badge badge-pendiente">Pendiente</span>
                                             @else
-                                            <span class="badge badge-pago">
-                                                <i class="fa-solid fa-circle-check badge-icon"></i> Pagado
-                                            </span>                                            
+                                            <span class="badge badge-pago">Pago</span>                                            
                                             @endif
                                         </td>
                                         <td style="white-space: nowrap;">{{ '$'. $service->monto }}</td>
@@ -101,13 +97,13 @@
                                                     <button type="submit" class="btn btn btn-sm"><i class="fa fa-fw fa-trash"></i></button>
                                                 </form>
                                             </div>
-                                            
+                                        
                                             <!-- Comprobante(PDF FACTURA C) -->
                                             <div class="d-inline-block">
                                                 <form action="{{ route('invoices.create') }}" method="POST" target="_blank" class="d-inline">
                                                     @csrf
                                                     <input type="hidden" name="id_servicio" value="{{ $service->id }}">
-                                                    <button type="submit" class="btn btn-sm btn"><i class="fa-solid fa-download"></i></button>
+                                                    <button type="submit" class="btn btn-sm btn"><i class="fa-solid fa-file-lines"></i></button>
                                                 </form>
                                             </div>
                                             <div class="d-inline-block">
