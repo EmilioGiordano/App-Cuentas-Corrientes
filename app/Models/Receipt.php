@@ -26,13 +26,7 @@ class Receipt extends Model
     ];
 
     protected $perPage = 20;
-    protected $fillable = ['id_pago','file_name'];
-    protected $appends = ['receipt_number'];
-
-    public function getReceiptNumberAttribute()
-    {
-      return $this->payment->checkingAccount->total_payments;
-    }
+    protected $fillable = ['id_pago','file_name', 'receipt_number'];
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
