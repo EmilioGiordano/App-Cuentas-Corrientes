@@ -90,6 +90,7 @@ class Service extends Model
                 // Crear un Invoice asociado al nuevo Service
                 $invoice = new Invoice();
                 $invoice->id_servicio = $service->id;
+                $invoice->invoice_number = $checkingAccount->total_services;
                 $invoice->file_name = $invoice->getFileName(); // Asumiendo que tienes un método getFileName en Invoice
                 $invoice->save();
             }

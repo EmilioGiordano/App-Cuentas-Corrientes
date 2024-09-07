@@ -25,19 +25,8 @@ class Invoice extends Model
     ];
 
     protected $perPage = 20;
-    protected $fillable = ['id_servicio','file_name'];
-    protected $appends = ['invoice_number'];
+    protected $fillable = ['id_servicio','file_name', 'invoice_number'];
 
-    // public function getInvoiceNumberAttribute()
-    // {
-    //   return $this->service->checkingAccount->services_ammount;
-    // }
-
-    public function getInvoiceNumberAttribute()
-    {
-      return $this->service->checkingAccount->total_services;
-    }
-    
     public function service()
     {
         return $this->hasOne('App\Models\Service', 'id', 'id_servicio');
@@ -53,7 +42,18 @@ class Invoice extends Model
       $service = $this->service;
       $clientAccountName = $service->checkingAccount->nombre;
      
-      return $file_name = "{$clientAccountName}_recibo_{$this->invoice_number}.pdf";
+      return $file_name = "{$clientAccountName}_factura_{$this->invoice_number}.pdf";
       
     }
+    
+    //Esto es un accessor. getXAttribute
+    //Ya no es necesario puesto que agregué invoice_number como campo de la tabla
+    // public function getInvoiceNumberAttribute()
+    // {
+    //   return $this->service->checkingAccount->total_services;
+    // }
+    
 }
+
+
+    
