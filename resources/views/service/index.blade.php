@@ -65,7 +65,8 @@
                                     <tr>
                                         <td>{{'Servicio - ' . ++$i }}</td>
                                         <td style="white-space: nowrap; font-weight: bold">{{ $service->checkingAccount->nombre }}</td>
-                                        <td>{{ $service->formatted_from_date }}</td>   <!-- Formateado 'd/m/Y' -->
+                                        <td style="white-space: nowrap;">{{ $service->formatted_from_date }}</td>
+                                        
                                         <td>{{ $service->detalles }}</td>
                                         <td style="text-align: center; font-size: 20px;">
                                             @if ($service->saldo_pendiente != "0.00")
@@ -74,8 +75,8 @@
                                             <span class="badge badge-pago">Pago</span>                                            
                                             @endif
                                         </td>
-                                        <td style="white-space: nowrap;">{{ '$'. $service->monto }}</td>
-                                        <td style="white-space: nowrap;">{{ '$'. $service->saldo_pendiente }}</td>
+                                        <td style="white-space: nowrap;">${{$service->formatted_monto }}</td>
+                                        <td style="white-space: nowrap;">{{ '$'. $service->formatted_saldo_pendiente }}</td>
                                         <td style="white-space: nowrap;">
                                             <!-- Editar Servicio -->
                                             @if (!$service->has_payments)

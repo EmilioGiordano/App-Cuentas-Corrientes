@@ -29,13 +29,13 @@ class CheckingAccount extends Model
 		'nombre' => 'required',
     ];
 
+    protected $casts = [
+        'saldo_a_pagar' => 'float',
+    ];
+
     protected $perPage = 20;
 
-    /**
-     * Attributes that should be mass-assignable.
-     *
-     * @var array
-     */
+    /*** Attributes that should be mass-assignable. * @var array */
     protected $fillable = ['id_cliente','nombre', 'direccion_fiscal', 'saldo_a_pagar', 'total_services', 'total_payments'];
     protected $appends =  ['services_ammount', 'payments_ammount'];
 
@@ -45,15 +45,19 @@ class CheckingAccount extends Model
         return $this->services()->count();
     }
 
+    // Accesor para personalizar el formato del monto
+    public function getFormattedSaldoAPagarAttribute()
+    {
+        return number_format($this->saldo_a_pagar, 2, ',', '.');
+    }
+
     // Contador de pagos por Cuenta Corriente
     public function getPaymentsAmmountAttribute()
     {
         return $this->payments()->count();
     }
     
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
+    /*** @return \Illuminate\Database\Eloquent\Relations\HasOne*/
     public function client()
     {
         return $this->hasOne('App\Models\Client', 'id', 'id_cliente');

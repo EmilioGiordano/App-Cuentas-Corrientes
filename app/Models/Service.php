@@ -34,6 +34,7 @@ class Service extends Model
     protected $casts = [
         'fecha' => 'datetime',
         'monto' => 'float',
+        'saldo_pendiente' => 'float'
     ];
 
     protected $perPage = 20;
@@ -130,17 +131,17 @@ class Service extends Model
     // Accesor para personalizar el formato de la fecha
     public function getFormattedFromDateAttribute()
     {
-        return $this->fecha->format('d/m/Y');
+        return $this->fecha->format('Y/m/d');
     }
     // Accesor para personalizar el formato del monto
     public function getFormattedMontoAttribute()
     {
-        return number_format($this->monto, 2, ',', '.');
+        return number_format($this->monto, 2, '.', ',');
     }
 
     public function getFormattedSaldoPendienteAttribute()
     {
         // Formatear el monto usando el formato específico
-        return number_format($this->saldo_pendiente, 2, ',', '.');
+        return number_format($this->saldo_pendiente, 2, '.', ',');
     }
 }

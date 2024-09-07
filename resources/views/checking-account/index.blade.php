@@ -52,7 +52,7 @@
                                             <td>{{ $checkingAccount->client->nombre . ' ' .$checkingAccount->client->apellido }}</td> 
                                             <td>{{ $checkingAccount->direccion_fiscal}}</td>      
                                             <td>{{ $checkingAccount->client->FiscalCondition->nombre_categoria }}</td>
-                                            <td>{{'$'. $checkingAccount->saldo_a_pagar }}</td>
+                                            <td>{{'$'. $checkingAccount->formatted_saldo_a_pagar }}</td>
                                             <td style="white-space: nowrap;">
                                             
                                                 <!-- Editar Cuenta Corriente -->

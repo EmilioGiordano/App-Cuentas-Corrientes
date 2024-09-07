@@ -55,9 +55,9 @@
                                         <tr>
                                             <td>{{'Pago - ' . ++$i }}</td>                                            
 											<td style="white-space: nowrap; font-weight: bold">{{ $payment->checkingAccount->nombre }}</td>
-                                            <td style="white-space: nowrap;">{{ $payment->fecha }}</td>
+                                            <td style="white-space: nowrap;">{{ $payment->formatted_from_date }}</td>
                                             <td>{{ $payment->detalles }}</td>
-                                            <td>{{'$'.$payment->monto }}</td>
+                                            <td style="white-space: nowrap;">${{$payment->formatted_monto }}</td>
 											
                                             <td style="white-space: nowrap;">
                                             <!-- Eliminar Recibo -->

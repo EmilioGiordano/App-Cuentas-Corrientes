@@ -3,10 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
 /**
  * Class Payment
- *
  * @property $id
  * @property $id_cuenta
  * @property $id_servicio
@@ -15,7 +13,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property $fecha
  * @property $created_at
  * @property $updated_at
- *
  * @property CheckingAccount $checkingAccount
  * @property Receipt[] $receipts
  * @property Service $service
@@ -31,43 +28,40 @@ class Payment extends Model
         'detalles' => 'required|min:5|max:255',
         'fecha' => 'required',
     ];
+
+    protected $casts = [
+        'fecha' => 'datetime',
+        'monto' => 'float',
+    ];
+
     protected $perPage = 20;
-    /**
-     * Attributes that should be mass-assignable.
-     *
-     * @var array
-     */
     protected $fillable = ['id_cuenta', 'id_servicio', 'monto', 'detalles', 'fecha'];
 
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
     public function checkingAccount()
     {
         return $this->hasOne('App\Models\CheckingAccount', 'id', 'id_cuenta');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
     public function receipts()
     {
         return $this->hasMany('App\Models\Receipt', 'id_pago', 'id');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
     public function service()
     {
         return $this->hasOne('App\Models\Service', 'id', 'id_servicio');
     }
 
+
+    // Accesor para personalizar el formato de la fecha
+    public function getFormattedFromDateAttribute()
+    {
+        return $this->fecha->format('Y/m/d');
+    }
+    // Accesor para personalizar el formato del monto
     public function getFormattedMontoAttribute()
     {
-        // Formatear el monto usando el formato específico
-        return number_format($this->monto, 2, ',', '.'); // 2 decimales, coma como separador decimal, punto como separador de milesw
+        return number_format($this->monto, 2, '.', ',');
     }
 
     protected static function boot()
@@ -91,6 +85,7 @@ class Payment extends Model
             // Crear un Invoice asociado al nuevo Service
             $receipt = new Receipt();
             $receipt->id_pago = $payment->id;
+            $receipt->receipt_number = $checkingAccount->total_payments;
             $receipt->file_name = $receipt->getFileName(); // Asumiendo que tienes un método getFileName en Invoice
             $receipt->save();
         });
