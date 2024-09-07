@@ -25,11 +25,11 @@ use Illuminate\Database\Eloquent\Model;
 class Payment extends Model
 {
     static $rules = [
-		'id_cuenta' => 'required',
-		'id_servicio' => 'required',
-		'monto' => 'required|numeric',
-		'detalles' => 'required|min:5|max:255',
-		'fecha' => 'required',
+        'id_cuenta' => 'required',
+        'id_servicio' => 'required',
+        'monto' => 'required|numeric',
+        'detalles' => 'required|min:5|max:255',
+        'fecha' => 'required',
     ];
     protected $perPage = 20;
     /**
@@ -37,7 +37,7 @@ class Payment extends Model
      *
      * @var array
      */
-    protected $fillable = ['id_cuenta','id_servicio','monto','detalles','fecha'];
+    protected $fillable = ['id_cuenta', 'id_servicio', 'monto', 'detalles', 'fecha'];
 
 
     /**
@@ -47,7 +47,7 @@ class Payment extends Model
     {
         return $this->hasOne('App\Models\CheckingAccount', 'id', 'id_cuenta');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -55,7 +55,7 @@ class Payment extends Model
     {
         return $this->hasMany('App\Models\Receipt', 'id_pago', 'id');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
@@ -63,8 +63,6 @@ class Payment extends Model
     {
         return $this->hasOne('App\Models\Service', 'id', 'id_servicio');
     }
-    
-
 
     public function getFormattedMontoAttribute()
     {
@@ -73,45 +71,43 @@ class Payment extends Model
     }
 
     protected static function boot()
-{
-    parent::boot();
+    {
+        parent::boot();
 
-    static::created(function ($payment) {
-        // Obtener el servicio asociado al pago
-        $service = $payment->service;
+        static::created(function ($payment) {
+            // Obtener el servicio asociado al pago
+            $service = $payment->service;
 
-        // Restar el monto del pago del saldo pendiente del servicio
-        $service->saldo_pendiente -= $payment->monto;
-        $service->save();
+            // Restar el monto del pago del saldo pendiente del servicio
+            $service->saldo_pendiente -= $payment->monto;
+            $service->save();
 
-        // Obtener la cuenta asociada al servicio
-        $checkingAccount = $service->checkingAccount;
-        // Incrementar total de Payments de la cuenta. Utilizado para el numero de Payments
-        $checkingAccount->total_payments += 1;
-        $checkingAccount->save();
-        
-        // Crear un Invoice asociado al nuevo Service
-        $receipt = new Receipt();
-        $receipt->id_pago = $payment->id;
-        $receipt->file_name = $receipt->getFileName(); // Asumiendo que tienes un método getFileName en Invoice
-        $receipt->save();
+            // Obtener la cuenta asociada al servicio
+            $checkingAccount = $service->checkingAccount;
+            // Incrementar total de Payments de la cuenta. Utilizado para el numero de Payments
+            $checkingAccount->total_payments += 1;
+            $checkingAccount->save();
 
-    });
+            // Crear un Invoice asociado al nuevo Service
+            $receipt = new Receipt();
+            $receipt->id_pago = $payment->id;
+            $receipt->file_name = $receipt->getFileName(); // Asumiendo que tienes un método getFileName en Invoice
+            $receipt->save();
+        });
 
-    static::deleted(function ($payment) {
-        // Obtener el servicio asociado al pago
-        $service = $payment->service;
+        static::deleted(function ($payment) {
+            // Obtener el servicio asociado al pago
+            $service = $payment->service;
 
-        // Incrementar el monto del pago al saldo pendiente del servicio
-        $service->saldo_pendiente += $payment->monto;
-        $service->save();
+            // Incrementar el monto del pago al saldo pendiente del servicio
+            $service->saldo_pendiente += $payment->monto;
+            $service->save();
 
-        // Obtener la cuenta asociada al servicio
-        $checkingAccount = $service->checkingAccount;
+            // Obtener la cuenta asociada al servicio
+            $checkingAccount = $service->checkingAccount;
 
 
-        $checkingAccount->save();
-    });
-}
-
+            $checkingAccount->save();
+        });
+    }
 }
