@@ -24,7 +24,7 @@ class PaymentController extends Controller
         // Obtener los servicios asociados a las cuentas de los clientes del usuario actual
         $payments = Payment::whereHas('checkingAccount.client.user', function ($query) use ($userId) {
             $query->where('id', $userId);
-        })->orderBy('created_at', 'desc')->get();
+        })->orderBy('created_at', 'asc')->get();
 
         return view('payment.index', compact('payments', 'i'));
     }

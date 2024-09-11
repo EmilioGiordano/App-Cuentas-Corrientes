@@ -31,7 +31,7 @@ class ServiceController extends Controller
     // Obtener los servicios asociados a las cuentas de los clientes del usuario actual
     $services = Service::whereHas('checkingAccount.client.user', function ($query) use ($userId) {
         $query->where('id', $userId);
-    })->orderBy('created_at', 'desc')->get();
+    })->orderBy('created_at', 'asc')->get();
 
     return view('service.index', compact('services', 'i'));
     }
