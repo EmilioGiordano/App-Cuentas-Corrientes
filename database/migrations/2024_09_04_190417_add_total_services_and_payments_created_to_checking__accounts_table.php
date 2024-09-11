@@ -11,8 +11,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('checking_Accounts', function (Blueprint $table) {
-            $table->unsignedInteger('total_services');
-            $table->unsignedInteger('total_payments');
+            $table->unsignedInteger('total_services')->default(0)->change();
+            $table->unsignedInteger('total_payments')->default(0)->change();
         });
     }
 
@@ -22,8 +22,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('checking_Accounts', function (Blueprint $table) {
-            $table->dropColumn('total_services');
-            $table->dropColumn('total_payments');
+            $table->dropColumn('total_services')->nullable()->change();;
+            $table->dropColumn('total_payments')->nullable()->change();;
         });
     }
 };
