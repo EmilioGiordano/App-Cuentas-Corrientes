@@ -22,6 +22,9 @@ class User extends Authenticatable
         'email',
         'password',
         'google_id',
+        'id_condicion_fiscal',
+        'fiscal_name',
+        'fiscal_direction',
     ];
 
     /**
