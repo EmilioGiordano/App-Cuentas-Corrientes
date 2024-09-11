@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\FiscalConditionController;
@@ -97,61 +98,7 @@ Route::get( '/home', [App\Http\Controllers\HomeController::class, 'index'])->nam
 
 //Profile
 Route::get('/NewPassword',  [UserSettingsController::class, 'NewPassword'])->name('NewPassword')->middleware('auth');
+Route::post('/updateProfile', [UserSettingsController::class, 'updateProfile'])->name('updateProfile')->middleware('auth');
+
 Route::post('/change/password',  [UserSettingsController::class, 'changePassword'])->name('changePassword');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//Sin autenticacion middleware no se puede entrar a la seccion
-
-// http://localhost/sistema/public/clientes
-// Metodo para acceder a empleados/index
-
-
-// Route::get('/cliente', function () {
-//     return view('cliente.index');
-// });
-
-// //se accede al ClienteController, al metodo create
-// //que hace esto  ---->  return view('clientes.create');
-
-//              Acceder "estaticamente" por URL
-// Route::get('/cliente/create', [ClienteController::class,'create']);
-// Route::get('/cliente/edit', [ClienteController::class,'edit']);
-
-
-
-
-
-
-
-
-// Auth::routes(['register'=>false, 'reset'=>false]); //lo que se ponga en  false no lo mostrará
-
-
-
-
-
-
-
-
-// Route::get('/home', [ClienteController::class,'index'])->name('home');
-// Route::group(['middleware' => 'auth'], function(){
-    
-//     Route::get('/', [ClienteController::class, 'index'])->name('home');
-// });

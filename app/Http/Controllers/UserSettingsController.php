@@ -12,6 +12,24 @@ class UserSettingsController extends Controller
     {
         return view('configure_user_profile');
     }
+    
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'fiscal_name' => 'required|string|max:100',
+            'fiscal_direction' => 'required|string|max:50',
+        ]);
+
+        $user->name = $request->name;
+        $user->fiscal_name = $request->fiscal_name;
+        $user->fiscal_direction = $request->fiscal_direction;
+        $user->save();
+
+        return redirect()->back()->with('status', 'Datos actualizados correctamente.');
+    }
 
     public function changePassword(Request $request)
     {
@@ -23,7 +41,7 @@ class UserSettingsController extends Controller
         if ($request->password_actual != "") {
             $newPass = $request->password;
             $confirmPass = $request->confirm_password;
-            $name = $request->name;
+            
 
             // Verifico si la clave actual es igual a la clave del usuario en sesión
             if (password_verify($request->password_actual, $userPassword)) {
@@ -35,7 +53,7 @@ class UserSettingsController extends Controller
                         $user->password = bcrypt($request->password);
                         $sqlBD = DB::table('users')
                             ->where('id', $user->id)
-                            ->update(['password' => $user->password, 'name' => $name]);
+                            ->update(['password' => $user->password]);
 
                         return redirect()->back()->with('updateClave', 'La contraseña fue cambiada correctamente.');
                     } else {
@@ -48,10 +66,9 @@ class UserSettingsController extends Controller
                 return back()->withErrors(['password_actual' => 'La contraseña no coincide']);
             }
         } else {
-            $name = $request->name;
+            
             $sqlBDUpdateName = DB::table('users')
-                ->where('id', $user->id)
-                ->update(['name' => $name]);
+                ->where('id', $user->id);
             return redirect()->back()->with('name', 'El nombre fue cambiado correctamente.');
         }
     }
