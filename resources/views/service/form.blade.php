@@ -3,7 +3,7 @@
         
         <div class="form-group">    
             {{ Form::label('id_cuenta', 'Cuenta asociada') }}
-            {{ Form::select('id_cuenta', $checking_account, null, ['class' => 'form-control' . ($errors->has('id_cuenta') ? ' is-invalid' : ''), 'placeholder' => 'Seleccione una cuenta']) }}
+            {{ Form::select('id_cuenta', $checking_account, $service->id_cuenta, ['class' => 'form-control' . ($errors->has('id_cuenta') ? ' is-invalid' : ''), 'placeholder' => 'Seleccione una cuenta']) }}
             {!! $errors->first('id_cuenta', '<div class="invalid-feedback">:message</div>') !!}
         </div>
 
