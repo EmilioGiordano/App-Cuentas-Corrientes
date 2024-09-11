@@ -20,8 +20,6 @@
     'resources/css/services-index-edit-disabled.css'
     ])
 
-
-
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -51,54 +49,54 @@
                                 <thead class="thead">
                                     <tr>
                                         <th>Servicio</th>
-										<th>Cuenta asociada</th>
+                                        <th>Cuenta asociada</th>
                                         <th>Fecha</th>
                                         <th>Detalles</th>
                                         <th>Estado</th>
-										<th>Monto</th>
-										<th>Saldo Pendiente</th>
-                                        <th>Acciones</th>
+                                        <th>Monto</th>
+                                        <th>Saldo Pendiente</th>
+                                        <th style="white-space: nowrap;">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 @foreach ($services as $service)
                                     <tr>
-                                        <td>{{'Servicio - ' . ++$i }}</td>
-                                        <td style="white-space: nowrap; font-weight: bold">{{ $service->checkingAccount->nombre }}</td>
-                                        <td style="white-space: nowrap;">{{ $service->formatted_from_date }}</td>
-                                        
-                                        <td>{{ $service->detalles }}</td>
-                                        <td style="text-align: center; font-size: 20px;">
+                                        <td class="table-cell">{{ 'Servicio - ' . ++$i }}</td>
+                                        <td class="table-cell" style="white-space: nowrap; font-weight: bold">{{ $service->checkingAccount->nombre }}</td>
+                                        <td class="table-cell" style="white-space: nowrap;">{{ $service->formatted_from_date }}</td>
+                                        <td class="table-cell">{{ $service->detalles }}</td>
+                                        <td class="table-cell" style="text-align: center; font-size: 20px;">
                                             @if ($service->saldo_pendiente != "0.00")
-                                            <span class="badge badge-pendiente">Pendiente</span>
+                                                <span class="badge badge-pendiente">Pendiente</span>
                                             @else
-                                            <span class="badge badge-pago">Pago</span>                                            
+                                                <span class="badge badge-pago">Pago</span>                                            
                                             @endif
                                         </td>
-                                        <td style="white-space: nowrap;">${{$service->formatted_monto }}</td>
-                                        <td style="white-space: nowrap;">{{ '$'. $service->formatted_saldo_pendiente }}</td>
-                                        <td style="white-space: nowrap;">
+                                        <td class="table-cell" style="white-space: nowrap;">${{ $service->formatted_monto }}</td>
+                                        <td class="table-cell" style="white-space: nowrap;">${{ $service->formatted_saldo_pendiente }}</td>
+                                        <td class="table-cell" style="white-space: nowrap;">
                                             <!-- Editar Servicio -->
                                             @if (!$service->has_payments)
-                                            <div class="d-inline-block">
-                                                <a id="edit-service-button" class="btn btn-sm btn" href="{{ route('services.edit',$service->id) }}"><i class="fa fa-fw fa-edit" ></i></a>
-                                            </div>
+                                                <div class="d-inline-block">
+                                                    <a class="edit-service-button btn btn-sm btn" href="{{ route('services.edit', $service->id) }}">
+                                                        <i class="fa fa-fw fa-edit"></i>
+                                                    </a>
+                                                </div>
                                             @else 
-                                           <div class="d-inline-block">
-                                               <a id="edit-service-button-disabled" class="btn btn-sm btn">
-                                                   <i class="fa fa-fw fa-edit"></i>
-                                               </a>
-                                           </div>
+                                                <div class="d-inline-block">
+                                                    <a class="edit-service-button-disabled btn btn-sm btn">
+                                                        <i class="fa fa-fw fa-edit"></i>
+                                                    </a>
+                                                </div>
                                             @endif
                                             <!-- Eliminar Servicio -->
                                             <div class="d-inline-block">
-                                                <form id="delete-button-general" action="{{ route('services.destroy',$service->id) }}" method="POST" class="d-inline">
+                                                <form class="delete-button-general d-inline" action="{{ route('services.destroy', $service->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn btn-sm"><i class="fa fa-fw fa-trash"></i></button>
+                                                    <button type="submit" class="btn btn-sm"><i class="fa fa-fw fa-trash"></i></button>
                                                 </form>
                                             </div>
-                                        
                                             <!-- Comprobante(PDF FACTURA C) -->
                                             <div class="d-inline-block">
                                                 <form action="{{ route('invoices.create') }}" method="POST" target="_blank" class="d-inline">
@@ -107,8 +105,23 @@
                                                     <button type="submit" class="btn btn-sm btn"><i class="fa-solid fa-file-lines"></i></button>
                                                 </form>
                                             </div>
+
+                                            <!-- DESCARGAR PDF -->
                                             <div class="d-inline-block">
-                                                <a class="btn btn-sm btn" href="{{ route('payments.showPaymentsPerService', ['id' => $service->id]) }}" style="background-color: pink;"><i class="fa fa-fw fa-eye"></i> Pagos</a>
+                                                <form action="{{ route('invoices.download', ['id' => $service->id]) }}" method="GET" target="_blank" class="d-inline">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-sm btn">
+                                                        <i class="fa-solid fa-download"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+
+
+                                            <!-- VER PAGOS -->
+                                            <div class="d-inline-block">
+                                                <a class="btn btn-sm btn" href="{{ route('payments.showPaymentsPerService', ['id' => $service->id]) }}" style="background-color: pink;">
+                                                    <i class="fa fa-fw fa-eye"></i> Pagos
+                                                </a>
                                             </div>
                                             @if ($service->saldo_pendiente != "0.00")
                                                 <div class="d-inline-block">

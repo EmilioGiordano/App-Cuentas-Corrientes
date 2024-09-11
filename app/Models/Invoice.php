@@ -6,13 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Invoice
- *
  * @property $id
  * @property $id_servicio
  * @property $file_name
  * @property $created_at
  * @property $updated_at
- *
  * @property Service $service
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
@@ -22,6 +20,11 @@ class Invoice extends Model
     static $rules = [
 		'id_servicio' => 'required',
 		'file_name' => 'required',
+    ];
+
+    protected $casts = [
+      'fecha' => 'datetime',
+      'monto' => 'float',
     ];
 
     protected $perPage = 20;
@@ -44,6 +47,17 @@ class Invoice extends Model
      
       return $file_name = "{$clientAccountName}_factura_{$this->invoice_number}.pdf";
       
+    }
+
+    // Accesor para personalizar el formato de la fecha
+    public function getFormattedFromDateAttribute()
+    {
+        return $this->fecha->format('Y/m/d');
+    }
+    // Accesor para personalizar el formato del monto
+    public function getFormattedMontoAttribute()
+    {
+        return number_format($this->monto, 2, '.', ',');
     }
     
     //Esto es un accessor. getXAttribute

@@ -76,16 +76,15 @@ class Service extends Model
                 // Obtener la cuenta asociada al servicio
                 $checkingAccount = $service->checkingAccount;
                 $checkingAccount->saldo_a_pagar += $service->saldo_pendiente;
-                // Incrementar total de Services de la cuenta. Utilizado para el numero de Invoice
+                // Incrementar total de Services de la cuenta. Utilizado para Invoice number
                 $checkingAccount->total_services += 1;
                 $checkingAccount->save();
-
 
                 // Crear un Invoice asociado al nuevo Service
                 $invoice = new Invoice();
                 $invoice->id_servicio = $service->id;
                 $invoice->invoice_number = $checkingAccount->total_services;
-                $invoice->file_name = $invoice->getFileName(); // Asumiendo que tienes un método getFileName en Invoice
+                $invoice->file_name = $invoice->getFileName();
                 $invoice->save();
             }
         });
