@@ -3,7 +3,7 @@
         
         <div class="form-group">
             {{ Form::label('id_cliente', 'Cliente asociado') }}
-            {{ Form::select('id_cliente', [$client->id => $client->nombre . ' ' . $client->apellido], $checkingAccount->id_cliente, ['class' => 'form-control', 'readonly' => 'readonly']) }}
+            {{ Form::text('id_cliente', $checkingAccount->client->nombre . ' ' . $checkingAccount->client->apellido, ['class' => 'form-control', 'readonly' => 'readonly']) }}
         </div>
 
 
