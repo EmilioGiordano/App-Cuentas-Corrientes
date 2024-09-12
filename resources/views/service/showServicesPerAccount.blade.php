@@ -27,14 +27,14 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span id="card_title">
-                                {{ __('Listado de servicios') . ': ' . ($services->first() ? $services->first()->checkingAccount->nombre : '') }}
-                            </span>
-                            <!-- Crear pero para la cuenta unicamente, no permitir seleccionar cuenta -->
-                             <div class="float-right">
-                                <a href="{{ route('services.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Crear nuevo') }}
-                                </a>
+                    <span id="card_title">
+                        {{ __('Listado de servicios') . ': ' . ($services->first() ? $services->first()->checkingAccount->nombre : '') }}
+                    </span>
+                    <!-- Crear pero para la cuenta unicamente, no permitir seleccionar cuenta -->
+                        <div class="float-right">
+                        <a href="{{ route('services.createForAccount', ['id' => $checkingAccount->id]) }}" class="btn btn-primary btn-sm float-right" data-placement="left">
+                        {{ __('Crear nuevo') }}
+                            </a>
                               </div>
                         </div>
                     </div>
