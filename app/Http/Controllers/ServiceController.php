@@ -156,6 +156,6 @@ class ServiceController extends Controller
         $i = 0;
     
         // Devolver la vista con los servicios y la variable $i
-        return view('service.index', compact('services', 'i'));
+        return view('service.showServicesPerAccount', compact('services', 'i'));
     }
 }
