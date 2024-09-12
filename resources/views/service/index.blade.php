@@ -62,7 +62,13 @@
                                 @foreach ($services as $service)
                                     <tr>
                                         <td class="table-cell">{{ 'Servicio - ' . ++$i }}</td>
-                                        <td class="table-cell" style="white-space: nowrap; font-weight: bold">{{ $service->checkingAccount->nombre }}</td>
+                                        <!-- Link a services Per Account -->
+                                        <td class="table-cell" style="white-space: nowrap; font-weight: bold">
+                                            <a href="{{ route('services.showServicesPerAccount', ['id' => $service->checkingAccount->id]) }}">
+                                                {{ $service->checkingAccount->nombre }}
+                                            </a>    
+                                        </td>
+                                        
                                         <td class="table-cell" style="white-space: nowrap;">{{ $service->formatted_from_date }}</td>
                                         <td class="table-cell">{{ $service->detalles }}</td>
                                         <td class="table-cell" style="text-align: center; font-size: 20px;">
