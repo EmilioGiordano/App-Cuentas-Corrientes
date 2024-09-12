@@ -6,10 +6,10 @@
 <!-- blade.php que contiene las dependencias, necesario en los index -->
 @extends('datatable-dependencies') 
 
-
 @section('template_title')
     Checking Account
 @endsection
+
 @section('title', 'Listado de clientes')
 
 @section('content')
@@ -19,11 +19,9 @@
                 <div class="card">
                     <div class="card-header">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-
                             <span id="card_title">
                                 {{ __('Listado de Cuentas Corrientes') }}
                             </span>
-
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -33,44 +31,61 @@
                     @endif
                 
                     <div class="card-body">
-                    <div class="table-responsive">
+                        <div class="table-responsive">
                             <table class="table table-hover" id='dataTable' class="display" cellspacing="0" width="100%">
                                 <thead class="thead">
                                     <tr>
-										<th>Nombre de la cuenta</th>
+                                        <th>Nombre de la cuenta</th>
                                         <th>Propietario</th>
                                         <th>Domicilio Fiscal</th>
                                         <th>Condicion Fiscal</th>
-										<th>Saldo a pagar</th>
-                                        <th>Acciones</th>
+                                        <th>Saldo a pagar</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($checkingAccounts as $checkingAccount)
                                         <tr>                                            
-                                            <td>{{ $checkingAccount->nombre }}</td>
-                                            <td>{{ $checkingAccount->client->nombre . ' ' .$checkingAccount->client->apellido }}</td> 
-                                            <td>{{ $checkingAccount->direccion_fiscal}}</td>      
-                                            <td>{{ $checkingAccount->client->FiscalCondition->nombre_categoria }}</td>
-                                            <td>{{'$'. $checkingAccount->formatted_saldo_a_pagar }}</td>
-                                            <td style="white-space: nowrap;">
-                                            
+                                            <td class="table-cell">{{ $checkingAccount->nombre }}</td>
+                                            <td class="table-cell">{{ $checkingAccount->client->nombre . ' ' . $checkingAccount->client->apellido }}</td> 
+                                            <td class="table-cell">{{ $checkingAccount->direccion_fiscal }}</td>      
+
+                                            <td class="table-cell">
+                                            @if ($checkingAccount->client->fiscalCondition)
+                                                {{ $checkingAccount->client->fiscalCondition->nombre_categoria }}
+                                            @else
+                                                Sin información
+                                            @endif
+                                        </td>
+                                            <td class="table-cell" style="white-space: nowrap;">{{ '$' . $checkingAccount->formatted_saldo_a_pagar }}</td>
+                                            <td class="table-cell" style="white-space: nowrap;">
                                                 <!-- Editar Cuenta Corriente -->
                                                 <div class="d-inline-block">
-                                                    <a class="btn btn-sm btn" href="{{ route('checking-accounts.edit',$checkingAccount->id) }}"><i class="fa fa-fw fa-edit"></i></a>
+                                                    <a class="btn btn-sm btn" href="{{ route('checking-accounts.edit', $checkingAccount->id) }}">
+                                                        <i class="fa fa-fw fa-edit"></i>
+                                                    </a>
                                                 </div>
-
                                                 <!-- Eliminar Cuenta Corriente -->
                                                 <div class="d-inline-block">
-                                                    <form id="delete-button-general" action="{{ route('checking-accounts.destroy',$checkingAccount->id) }}" method="POST" class="d-inline">
+                                                    <form class="delete-button-general d-inline" action="{{ route('checking-accounts.destroy', $checkingAccount->id) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn btn-sm"><i class="fa fa-fw fa-trash"></i></button>
+                                                        <button type="submit" class="btn btn-sm btn">
+                                                            <i class="fa fa-fw fa-trash"></i>
+                                                        </button>
                                                     </form>
                                                 </div>
                                                 <!-- Ver servicios y pagos -->
-                                                <a class="btn btn-sm btn-warning" href="{{ route('services.showServicesPerAccount', ['id' => $checkingAccount->id]) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Servicios') }}</a>
-                                                <a class="btn btn-sm btn-warning" href="{{ route('payments.showPaymentsPerAccount', ['id' => $checkingAccount->id]) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Pagos') }}</a>
+                                                <div class="d-inline-block">
+                                                    <a class="btn btn-sm btn-warning" href="{{ route('services.showServicesPerAccount', ['id' => $checkingAccount->id]) }}">
+                                                        <i class="fa fa-fw fa-eye"></i> {{ __('Servicios') }}
+                                                    </a>
+                                                </div>
+                                                <div class="d-inline-block">
+                                                    <a class="btn btn-sm btn-warning" href="{{ route('payments.showPaymentsPerAccount', ['id' => $checkingAccount->id]) }}">
+                                                        <i class="fa fa-fw fa-eye"></i> {{ __('Pagos') }}
+                                                    </a>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -79,9 +94,7 @@
                         </div>
                     </div>
                 </div>
-                
             </div>
         </div>
     </div>
 @endsection
-

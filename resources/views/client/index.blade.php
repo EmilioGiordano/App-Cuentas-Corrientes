@@ -22,11 +22,11 @@
                             <span id="card_title">
                                 {{ __('Listado de Clientes') }}
                             </span>
-                             <div class="float-right">
-                                <a href="{{ route('clients.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                            <div class="float-right">
+                                <a href="{{ route('clients.create') }}" class="btn btn-primary btn-sm float-right" data-placement="left">
                                   {{ __('Crear nuevo') }}
                                 </a>
-                              </div>
+                            </div>
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -36,54 +36,50 @@
                     @endif
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-hover" id='dataTable' class="display" cellspacing="0" width="100%">
+                            <table class="table table-hover" id="dataTable" cellspacing="0" width="100%">
                                 <thead class="thead">
                                     <tr>
-										<th style="white-space: nowrap" >Nombre y apellido</th>
-										<th>Dni</th>
-										<th>Cuitcuil</th>
-										<th>Email</th>
-										<th>Telefono</th>
-										<th>Condicion Fiscal</th>
-                                        <th>Acciones</th>
+                                        <th style="white-space: nowrap;">Nombre y apellido</th>
+                                        <th>Dni</th>
+                                        <th>Cuitcuil</th>
+                                        <th>Email</th>
+                                        <th>Telefono</th>
+                                        <th>Condicion Fiscal</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($clients as $client)
                                         <tr>
-                                            <td>{{ $client->nombre . ' ' . $client->apellido }}</td>
-                                            <td>{{ $client->dni }}</td>
-                                            <td style="white-space: nowrap;">{{ $client->cuitcuil }}</td>
-                                            <td>{{ $client->email }}</td>
-                                            <td style="white-space: nowrap;">{{ $client->telefono }}</td>
-											<td>
+                                            <td class="table-cell">{{ $client->nombre . ' ' . $client->apellido }}</td>
+                                            <td class="table-cell">{{ $client->dni }}</td>
+                                            <td class="table-cell" style="white-space: nowrap;">{{ $client->cuitcuil }}</td>
+                                            <td class="table-cell">{{ $client->email }}</td>
+                                            <td class="table-cell" style="white-space: nowrap;">{{ $client->telefono }}</td>
+                                            <td class="table-cell">
                                                 @if ($client->fiscalCondition)
                                                     {{ $client->fiscalCondition->nombre_categoria }}
-                                                    @else
+                                                @else
                                                     Sin información
                                                 @endif
                                             </td>
-                                            <td style="white-space: nowrap;">
+                                            <td class="table-cell" style="white-space: nowrap;">
                                                 <!-- Editar Cliente -->
                                                 <div class="d-inline-block">
-                                                    <a class="btn btn-sm btn" href="{{ route('clients.edit',$client->id) }}"><i class="fa fa-fw fa-edit"></i></a>
+                                                    <a class="btn btn-sm btn" href="{{ route('clients.edit', $client->id) }}"><i class="fa fa-fw fa-edit"></i></a>
                                                 </div>
 
                                                 <!-- Eliminar Cliente -->
                                                 <div class="d-inline-block">
-                                                    <form id="delete-button-general" action="{{ route('clients.destroy',$client->id) }}" method="POST" class="d-inline">
+                                                    <form class="delete-button-general d-inline" action="{{ route('clients.destroy', $client->id) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn btn-sm"><i class="fa fa-fw fa-trash"></i></button>
+                                                        <button type="submit" class="btn btn-sm"><i class="fa fa-fw fa-trash"></i></button>
                                                     </form>
                                                 </div>
-                                                <!-- Ver o Crear Cuenta -->
-                                                <div style="display: inline-block;">
-                                                    @if ($client->checkingAccounts()->exists())
-                                                        <a class="btn btn-sm btn-warning" href="{{ route('checking-accounts.show', ['client_id' => $client->checkingAccounts->first()->id]) }}">
-                                                            <i class="fa fa-fw fa-eye"></i> Cuenta
-                                                        </a>
-                                                    @else
+                                                <!-- Crear Cuenta (Visible si el cliente no tiene cuenta) -->
+                                                <div class="d-inline-block">
+                                                    @if (!$client->checkingAccounts()->exists())
                                                         <a class="btn btn-sm btn-warning" href="{{ route('checking-accounts.createForClient', ['client_id' => $client->id]) }}">
                                                             <i class="fa fa-fw fa-plus"></i> Cuenta
                                                         </a>
@@ -97,7 +93,6 @@
                         </div>
                     </div>
                 </div>
-               
             </div>
         </div>
     </div>

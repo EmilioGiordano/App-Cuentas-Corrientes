@@ -1,11 +1,9 @@
 @extends('layouts.app')
 
 
-@section('css')
-<link href="https://cdn.datatables.net/2.0.1/css/dataTables.bootstrap5.css" rel="stylesheet">
-<link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-@endsection
+
+<!-- blade.php que contiene las dependencias, necesario en los index -->
+@extends('datatable-dependencies') 
 
 
 @section('template_title')
@@ -47,7 +45,6 @@
                                 
                                     <tr>
 										<th>Condición frente al IVA</th>
-
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -58,18 +55,20 @@
 											<td>{{ $fiscalCondition->nombre_categoria }}</td>
 
                                             <td>
-                                                <!-- Editar -->
+                                                <!-- Editar Condicion Fiscal -->
                                                 <div class="d-inline-block">
                                                     <a class="btn btn-sm btn" href="{{ route('fiscal-conditions.edit',$fiscalCondition->id) }}"><i class="fa fa-fw fa-edit"></i></a>
                                                 </div>
-                                                <!-- Eliminar -->
+                                             
+                                                <!-- Eliminar Condicion Fiscal -->
                                                 <div class="d-inline-block">
-                                                    <form id="delete-button-general" action="{{ route('fiscal-conditions.destroy',$fiscalCondition->id) }}" method="POST" class="d-inline">
+                                                    <form class="delete-button-general d-inline" action="{{ route('fiscal-conditions.destroy', $fiscalCondition->id) }}" method="POST" class="d-inline">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn btn-sm"><i class="fa fa-fw fa-trash"></i></button>
+                                                        <button type="submit" class="btn btn-sm"><i class="fa fa-fw fa-trash"></i></button>
                                                     </form>
                                                 </div>
+
                                                 
                                                 
                                             </td>
