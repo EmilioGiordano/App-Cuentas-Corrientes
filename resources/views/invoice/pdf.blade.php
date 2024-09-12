@@ -10,7 +10,7 @@ $service = $invoice->service;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recibo de pago</title>
+    <title>Factura</title>
 </head>
 
 <body>
@@ -31,8 +31,8 @@ $service = $invoice->service;
 
         <div class="info-comprobante">
             <p class="tittle">Factura</p>
-            <p>Número de factura: {{ $invoice->invoice_number }}</p>
-            <p>Fecha: {{ $service->fecha}}</p>
+            <p>Número de comprobante: {{ $invoice->invoice_number }}</p>
+            <p>Fecha: {{ $service->formatted_from_date }}</p>
         </div>
 
         <div class="emitido-a">
@@ -52,7 +52,7 @@ $service = $invoice->service;
             <tbody>
                 <tr>
                     <td>{{ $service->detalles}}</td>
-                    <td style="text-align: right;">${{ number_format($service->monto, 2, ',', '.') }}</td>
+                    <td style="text-align: right;">${{ $service->formatted_monto }}</td>
 
                 </tr>
             </tbody>

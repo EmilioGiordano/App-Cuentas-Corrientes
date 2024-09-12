@@ -55,7 +55,7 @@
                                         <th>Estado</th>
                                         <th>Monto</th>
                                         <th>Saldo Pendiente</th>
-                                        <th style="white-space: nowrap;">Acciones</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -77,12 +77,14 @@
                                         <td class="table-cell" style="white-space: nowrap;">
                                             <!-- Editar Servicio -->
                                             @if (!$service->has_payments)
+                                            <!-- BOTON HABILITADO -->
                                                 <div class="d-inline-block">
                                                     <a class="edit-service-button btn btn-sm btn" href="{{ route('services.edit', $service->id) }}">
                                                         <i class="fa fa-fw fa-edit"></i>
                                                     </a>
                                                 </div>
-                                            @else 
+                                            @else  
+                                            <!-- BOTON DESABILITADO -->
                                                 <div class="d-inline-block">
                                                     <a class="edit-service-button-disabled btn btn-sm btn">
                                                         <i class="fa fa-fw fa-edit"></i>

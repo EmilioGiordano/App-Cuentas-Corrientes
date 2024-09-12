@@ -33,7 +33,7 @@ $payment = $receipt->payment;
         <div class="info-comprobante">
             <p class="tittle">Recibo de pago</p>
             <p>Número de recibo: {{ $receipt->receipt_number }}</p>
-            <p>Fecha: {{ $payment->fecha}}</p>
+            <p>Fecha: {{ $payment->formatted_from_date}}</p>
         </div>
 
         <div class="emitido-a">
@@ -53,7 +53,7 @@ $payment = $receipt->payment;
             <tbody>
                 <tr>
                     <td>{{ $payment->detalles}}</td>
-                    <td style="text-align: right;">${{ $payment->monto }}</td>
+                    <td style="text-align: right;">${{ $payment->formatted_monto }}</td>
                 </tr>
             </tbody>
         </table>
