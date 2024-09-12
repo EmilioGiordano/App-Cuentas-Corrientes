@@ -35,14 +35,21 @@ class CheckingAccountController extends Controller
 
     public function create()
     {
-        // Obtener el ID del usuario actualmente autenticado
         $userId = Auth::id();
-        // Obtener los clientes asociados al usuario actual
         $client = Client::where('id_user', $userId)->first(); // Obtener el primer cliente
         $checkingAccount = new CheckingAccount();
         
         return view('checking-account.create', compact('checkingAccount', 'client'));
     }
+
+    public function edit($id)
+    {
+        $checkingAccount = CheckingAccount::find($id);
+        $client = Client::find($checkingAccount->id_cliente); // Obtener el cliente asociado
+        
+        return view('checking-account.edit', compact('checkingAccount', 'client'));
+    }
+    
 
     public function createForClient($client_id)
     {
@@ -85,12 +92,7 @@ class CheckingAccountController extends Controller
     }
 
  
-    public function edit($id)
-    {
-        $checkingAccount = CheckingAccount::find($id);
-        $client = Client::pluck(DB::raw("CONCAT(nombre, ' ', apellido) AS nombre_completo"), 'id'); // Obtener lista de clientes sin el uso de select
-        return view('checking-account.edit', compact('checkingAccount', 'client'));
-    }
+
 
 
     public function update(Request $request, CheckingAccount $checkingAccount)

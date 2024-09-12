@@ -46,7 +46,11 @@
                                 <tbody>
                                     @foreach ($checkingAccounts as $checkingAccount)
                                         <tr>                                            
-                                            <td class="table-cell">{{ $checkingAccount->nombre }}</td>
+                                            <td class="table-cell" style="white-space: nowrap; font-weight: bold">
+                                                <a href="{{ route('services.showServicesPerAccount', ['id' => $checkingAccount->id]) }}">
+                                                    {{ $checkingAccount->nombre }}
+                                                </a>    
+                                            </td>
                                             <td class="table-cell">{{ $checkingAccount->client->nombre . ' ' . $checkingAccount->client->apellido }}</td> 
                                             <td class="table-cell">{{ $checkingAccount->direccion_fiscal }}</td>      
 
