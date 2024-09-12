@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 
 /**
  * Class Client
@@ -29,13 +31,14 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
     
+    use HasFactory;
     static $rules = [
 		'id_condicion_fiscal' => 'required',
 		// 'id_user' => 'required',
 		'nombre' => 'required',
 		'apellido' => 'required',
-		'dni' => 'required|max:8',
-		'cuitcuil' => 'required|max:11',
+		'dni' => 'required|max:8|min:8',
+		'cuitcuil' => 'required|max:11|min:11',
 		'email' => 'required',
 		'telefono' => 'required',
             
