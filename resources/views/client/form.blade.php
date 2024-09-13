@@ -44,4 +44,5 @@
     <div class="box-footer mt20">
         <button type="submit" class="btn btn-primary">{{ __('Guardar') }}</button>
     </div>
+
 </div>
