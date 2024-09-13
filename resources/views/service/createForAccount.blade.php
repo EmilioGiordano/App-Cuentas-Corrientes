@@ -16,8 +16,8 @@
                         <span class="card-title">{{ __('Crear') }} Servicio</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('services.store') }}"  role="form" enctype="multipart/form-data">
-                            @csrf
+                        <form method="POST" action="{{ route('services.storeForAccount', ['id' => $checkingAccount->id]) }}"  role="form" enctype="multipart/form-data">
+                        @csrf
 
                             @include('service.formForAccount')
 

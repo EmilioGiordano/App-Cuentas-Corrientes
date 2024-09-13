@@ -1,4 +1,4 @@
-{{ Form::open(['route' => 'services.store', 'method' => 'post']) }}
+    {{ Form::open(['route' => 'services.store', 'method' => 'post']) }}
 
 <div class="box box-info padding-1">
     <div class="box-body">

@@ -71,7 +71,9 @@ Route::get('checking-accounts/create', [CheckingAccountController::class, 'creat
 
 // Ruta para el método createForClient (crea la cuenta automáticamente para un cliente específico)
 Route::get('checking-accounts/createForClient/{client_id}', [CheckingAccountController::class, 'createForClient'])->name('checking-accounts.createForClient')->middleware('auth');
-Route::get('checking-accounts/show/{client_id}', [CheckingAccountController::class, 'show'])->name('checking-accounts.show')->middleware('auth');
+
+//Ruta para ver resumen de cuenta
+// Route::get('checking-accounts/show/{client_id}', [CheckingAccountController::class, 'show'])->name('checking-accounts.show')->middleware('auth');
 
 
 Route::get('payments/create/{service_id}/{cuenta_id}', [App\Http\Controllers\PaymentController::class, 'create'])->name('payments.create')->middleware('auth');
@@ -80,10 +82,9 @@ Route::get('payments/create/{service_id}/{cuenta_id}', [App\Http\Controllers\Pay
 Route::post('invoices/create', [InvoiceController::class, 'create'])->name('invoices.create');
 Route::post('receipts/create', [ReceiptController::class, 'create'])->name('receipts.create');
 
-
-Route::get('services/{id}/showServicesPerAccount', [App\Http\Controllers\ServiceController::class, 'showServicesPerAccount'])->name('services.showServicesPerAccount');
 Route::get('payments/{id}/showPaymentsPerAccount', [App\Http\Controllers\PaymentController::class, 'showPaymentsPerAccount'])->name('payments.showPaymentsPerAccount');
 Route::get('payments/{id}/showPaymentsPerService', [App\Http\Controllers\PaymentController::class, 'showPaymentsPerService'])->name('payments.showPaymentsPerService');
+
 
 // COMPROBANTE DE 1 FACTURA C
 Route::get('invoices/{id}/showInvoicePerService', [App\Http\Controllers\InvoiceController::class, 'showInvoicePerService'])->name('invoices.showInvoicePerService');
@@ -93,12 +94,15 @@ Route::get('receipts/{id}/showReceiptPerPayment', [App\Http\Controllers\ReceiptC
 // ->middleware('auth');
 Route::get( '/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-
-
-
 //Profile
 Route::get('/NewPassword',  [UserSettingsController::class, 'NewPassword'])->name('NewPassword')->middleware('auth');
 Route::post('/updateProfile', [UserSettingsController::class, 'updateProfile'])->name('updateProfile')->middleware('auth');
 
 Route::post('/change/password',  [UserSettingsController::class, 'changePassword'])->name('changePassword');
+
+// Ruta para mostrar los servicios por cuenta
+Route::get('accounts/{id}/services', [App\Http\Controllers\ServicePerAccountController::class, 'showServicesPerAccount'])->name('services.showServicesPerAccount');
+// Ruta para crear un servicio en una cuenta específica
+route::get('accounts/{id}/create-for-account', [App\Http\Controllers\ServicePerAccountController::class, 'createForAccount'])->name('services.createForAccount');// Ruta para la vista formForAccount.blade.php
+Route::post('accounts/{id}/store-for-account', [App\Http\Controllers\ServicePerAccountController::class, 'storeForAccount'])->name('services.storeForAccount');
 

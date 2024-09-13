@@ -14,7 +14,9 @@ class ServicePerAccountController extends Controller
 
     public function createForAccount($id)
     {
-        $checkingAccount = CheckingAccount::find($id, ['id', 'nombre']); //get only id, optimized
+        // Get only ID para optimizar consulta. Nombre utilizado para visualizar la 
+        // cuenta corriente en el formulario de creacion
+        $checkingAccount = CheckingAccount::find($id, ['id', 'nombre']); 
         $service = new Service();
         return view('service.createForAccount', compact('checkingAccount', 'service'));
     }
@@ -27,14 +29,19 @@ class ServicePerAccountController extends Controller
         return view('service.showServicesPerAccount', compact('services', 'i', 'checkingAccount'));
     }
 
-    public function storeForAccount(Request $request)
+    public function storeForAccount(Request $request, $id)
     {
-        request()->validate(Service::$rules);
-
-        $service = Service::create($request->all());
-
-        return redirect()->route('services.showServicesPerAccount')
-            ->with('success', 'Service created successfully.');
+        // Validar los datos
+        $request->validate(Service::$rules);
+        // Crear el servicio, asignando el ID de la cuenta correspondiente
+        $serviceData = $request->all();
+        $serviceData['id_cuenta'] = $id; // Asignar el id de la cuenta corriente
+        $service = Service::create($serviceData);
+    
+        
+        return redirect()->route('services.showServicesPerAccount', $id)
+            ->with('success', 'Servicio creado exitosamente.');
     }
+    
 
 }
