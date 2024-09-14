@@ -46,14 +46,41 @@ class ServicePerAccountController extends Controller
     
     public function generateSummaryPDF($id)
     {
-       
         $date = now();
         $checkingAccount = CheckingAccount::with('client')->find($id);
         $client = $checkingAccount->client;
-        $user= $client->user;
-        $services = Service::where('id_cuenta', $id)->paginate();
-        $pdf = Pdf::loadView('service.summaryPDF', compact('services', 'checkingAccount', 'client', 'user','date'));
-
+        $user = $client->user;
+        // Obtener servicios y pagos
+        $services = Service::where('id_cuenta', $id)->get();
+        $payments = $checkingAccount->payments;
+        // Combinar servicios y pagos en una sola colección
+        $combined = collect();
+        // Agregar servicios
+        foreach ($services as $service) {
+            $combined->push([
+                'type' => 'service',
+                'fecha' => $service->formatted_from_date, // Incluye la fecha si es relevante
+                'nro_servicio' => $service->invoices->invoice_number,
+                'detalles' => $service->detalles,
+                'monto' => $service->monto,
+                'payment' => null
+            ]);
+        }
+        // Agregar pagos
+        foreach ($payments as $payment) {
+            $combined->push([
+                'type' => 'payment',
+                'fecha' => $payment->formatted_from_date, // Asegúrate de que `formatted_date` esté disponible
+                'nro_servicio' => null, // No aplica para pagos
+                'detalles' => $payment->detalles, // Si los pagos tienen detalles
+                'monto' => null,
+                'payment' => $payment->monto
+            ]);
+        }
+        // Ordenar por fecha o por cualquier otro campo que necesites
+        // $combined = $combined->sortBy('fecha');
+        $pdf = Pdf::loadView('service.summaryPDF', compact('combined', 'checkingAccount', 'client', 'user', 'date'));
         return $pdf->stream();
     }
+    
 }

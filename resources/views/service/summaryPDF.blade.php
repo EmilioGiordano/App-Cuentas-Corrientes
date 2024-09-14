@@ -25,15 +25,17 @@ $client = $checkingAccount->client;
         <div class="titulito">
             <div class="header">
                 <div class="logo">
-                    <p class="tittle">Estudio Luis Maria Griego</p>
-                    <p>Arellano 823</p>
+                    <p class="tittle">{{$user->fiscal_name}}</p>
+                    <p>{{ $user->name }}</p>
+                    <p>Domicilio comercial: {{ $user->fiscal_direction }}</p>
+                    <p>CUIT: {{ $user->CUIT}}</p>
                 </div>
             </div>
 
             <div class="info-comprobante">
-                <p class="tittle">Recibo de pago</p>
-                <p>Invoice No: 0000001</p>
-                <p>Date: 10.09.2024</p>
+                <p class="tittle">Resumen de cuenta</p>
+
+                <p>Fecha de emisión: {{$date}}</p>
             </div>
         </div>
 
@@ -45,27 +47,29 @@ $client = $checkingAccount->client;
         </div>
 
         <table class="table">
-            <thead>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Código</th>
+                <th>Detalles</th>
+                <th>Servicio</th>
+                <th>Pago</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($combined as $item)
                 <tr>
-                    <th>Fecha</th>
-                    <th>Nro. servicio</th>
-                    <th>Detalles</th>
-                    <th>Servicio</th>
-                    <th>Pago</th>
+                    <td>{{ $item['fecha'] ?? '' }}</td>
+                    <td>000{{ $item['nro_servicio'] ?? '' }}</td>
+              
+                    <td>{{ $item['detalles'] ?? '' }}</td>
+                    <td>{{ $item['type'] == 'service' ? '$' . number_format($item['monto'], 2) : '' }}</td>
+                    <td>{{ $item['type'] == 'payment' ? '$' . number_format($item['payment'], 2) : '' }}</td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach ($services as $service)
-                <tr>
-                    <td>{{ $service->formatted_from_date }}</td>
-                    <td>000{{$service->id}}</td>
-                    <td>{{ $service->detalles}}</td>
-                    <td>${{ $service->formatted_monto }}</td>
-                    <td>${{ $service->payment->monto ?? 'a'}}</td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+            @endforeach
+        </tbody>
+    </table>
+
         <div class="total">
             <p>Importe total: </p>
         </div>
@@ -104,7 +108,7 @@ $client = $checkingAccount->client;
     max-width: 800px;
     padding: 20px;
     }
-    
+
     .header, .info-comprobante {
         margin: 0;
         padding: 0;

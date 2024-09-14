@@ -65,7 +65,7 @@ Service
                             <tbody>
                                 @foreach ($services as $service)
                                 <tr>
-                                    <td class="table-cell">{{ 'Servicio - ' . $service->invoices->invoice_number }}</td>
+                                    <td class="table-cell">{{ '000' . $service->invoices->invoice_number }}</td>
                                     <td class="table-cell" style="white-space: nowrap;">{{ $service->formatted_from_date }}</td>
                                     <td class="table-cell">{{ $service->detalles }}</td>
                                     <td class="table-cell" style="text-align: center; font-size: 20px;">
