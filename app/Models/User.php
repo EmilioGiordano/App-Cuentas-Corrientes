@@ -25,6 +25,7 @@ class User extends Authenticatable
         'id_condicion_fiscal',
         'fiscal_name',
         'fiscal_direction',
+        'CUIT'
     ];
 
     /**

@@ -21,11 +21,13 @@ class UserSettingsController extends Controller
             'name' => 'required|string|max:255',
             'fiscal_name' => 'required|string|max:100',
             'fiscal_direction' => 'required|string|max:50',
+            'CUIT' => 'required|min:11|max:11'
         ]);
 
         $user->name = $request->name;
         $user->fiscal_name = $request->fiscal_name;
         $user->fiscal_direction = $request->fiscal_direction;
+        $user->CUIT = $request->CUIT;
         $user->save();
 
         return redirect()->back()->with('status', 'Datos actualizados correctamente.');
@@ -63,7 +65,7 @@ class UserSettingsController extends Controller
                     return redirect()->back()->with('claveIncorrecta', 'Por favor, verifica que las contraseñas coincidan.');
                 }
             } else {
-                return back()->withErrors(['password_actual' => 'La contraseña no coincide']);
+                return back()->withErrors(['password_actual' => 'La contraseña no es correcta.']);
             }
         } else {
             

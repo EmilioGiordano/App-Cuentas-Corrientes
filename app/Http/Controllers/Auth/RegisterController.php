@@ -51,6 +51,7 @@ class RegisterController extends Controller
             'id_condicion_fiscal'=> ['required'],
             'fiscal_name' => ['required', 'string', 'max:100'],
             'fiscal_direction' => ['required', 'string', 'max:50'],
+            'CUIT' => ['required, string', 'min:11', 'max:11']
         ]);
     }
     /**
@@ -67,6 +68,7 @@ class RegisterController extends Controller
             'fiscal_name' => $data['fiscal_name'],
             'fiscal_direction' => $data['fiscal_direction'],
             'id_condicion_fiscal' => $data['id_condicion_fiscal'], 
+            'CUIT'=> $data['CUIT'],
 
        
         ]);

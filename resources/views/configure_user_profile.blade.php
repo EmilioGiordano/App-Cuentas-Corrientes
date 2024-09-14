@@ -32,6 +32,20 @@
                         </div>
                     </div>
 
+                    <!-- CUIT de usuario -->
+                    <div class="row mb-3">
+                        <div class="form-group mt-3">
+                            <label for="CUIT">CUIT</label>
+                            <input type="text" name="CUIT" value="{{ Auth::user()->CUIT }}"
+                                class="form-control @error('CUIT') is-invalid @enderror" required>
+                            @error('CUIT')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
                     <!-- Razón Social -->
                     <div class="row mb-3">
                         <div class="form-group mt-3">
