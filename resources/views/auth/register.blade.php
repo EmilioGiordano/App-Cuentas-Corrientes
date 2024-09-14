@@ -40,28 +40,6 @@
                             </div>
                         </div>
 
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Contraseña') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirmar Contraseña') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
                         <!-- RAZON SOCIAL -->
                         <div class="row mb-3">
                             <label for="fiscal_name" class="col-md-4 col-form-label text-md-end">{{ __('Razon Social') }}</label>
@@ -70,6 +48,20 @@
                                 <input id="fiscal_name" type="text" class="form-control @error('fiscal_name') is-invalid @enderror" name="fiscal_name" value="{{ old('fiscal_name') }}" required autocomplete="fiscal_name" autofocus>
 
                                 @error('fiscal_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <!-- CUIT -->
+                        <div class="row mb-3">
+                            <label for="CUIT" class="col-md-4 col-form-label text-md-end">{{ __('CUIT') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="CUIT" type="text" class="form-control @error('CUIT') is-invalid @enderror" name="CUIT" value="{{ old('CUIT') }}" required autocomplete="CUIT" autofocus>
+
+                                @error('CUIT')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -98,11 +90,33 @@
                             {!! $errors->first('id_condicion_fiscal', '<div class="invalid-feedback">:message</div>') !!}
                         </div>
 
+                        <div class="row mb-3">
+                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Contraseña') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirmar Contraseña') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                            </div>
+                        </div>
+
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Confirmar') }}
+                                {{ __('Confirmar') }}
                                 </button>
                             </div>
                         </div>
