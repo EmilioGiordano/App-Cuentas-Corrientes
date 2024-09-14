@@ -33,7 +33,7 @@ Service
                        
                         <!-- Crear pero para la cuenta unicamente, no permitir seleccionar cuenta -->
                         <div class="float-right">
-                        <a href="" class="btn btn-success btn-sm float-right" data-placement="left">
+                        <a href="{{ route('services.generateSummaryPDF', ['id' => $checkingAccount->id]) }}" class="btn btn-success btn-sm float-right" data-placement="left">
                             <i class="fa-solid fa-file-invoice"></i> {{ __(' Generar resumen cliente') }}   
                         </a>
                         <a href="{{ route('services.createForAccount', ['id' => $checkingAccount->id]) }}" class="btn btn-primary btn-sm float-right" data-placement="left">

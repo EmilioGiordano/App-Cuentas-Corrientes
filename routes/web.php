@@ -105,4 +105,4 @@ Route::get('accounts/{id}/services', [App\Http\Controllers\ServicePerAccountCont
 // Ruta para crear un servicio en una cuenta específica
 route::get('accounts/{id}/create-for-account', [App\Http\Controllers\ServicePerAccountController::class, 'createForAccount'])->name('services.createForAccount');// Ruta para la vista formForAccount.blade.php
 Route::post('accounts/{id}/store-for-account', [App\Http\Controllers\ServicePerAccountController::class, 'storeForAccount'])->name('services.storeForAccount');
-
+route::get('accounts/{id}/services/summary-pdf', [App\Http\Controllers\ServicePerAccountController::class, 'generateSummaryPDF'])->name('services.generateSummaryPDF');
