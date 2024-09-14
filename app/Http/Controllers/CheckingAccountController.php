@@ -23,14 +23,7 @@ class CheckingAccountController extends Controller
             $query->where('id', $userId);
         })->get();
 
-        // Calcular la suma de los saldos pendientes por cuenta
-        $totalSaldosPorCuenta = [];
-
-        foreach ($checkingAccounts as $checkingAccount) {
-            $totalSaldosPorCuenta[$checkingAccount->id] = $checkingAccount->services()->sum('saldo_pendiente');
-            $checkingAccount->saldo_a_pagar = $totalSaldosPorCuenta[$checkingAccount->id];
-        }
-        return view('checking-account.index', compact('checkingAccounts', 'totalSaldosPorCuenta'));
+        return view('checking-account.index', compact('checkingAccounts'));
     }
 
     public function create()
@@ -79,7 +72,7 @@ class CheckingAccountController extends Controller
         $checkingAccount = CheckingAccount::create($request->all());
 
         return redirect()->route('checking-accounts.index')
-            ->with('success', 'CheckingAccount created successfully.');
+            ->with('success', 'Cuenta corriente creada exitosamente.');
     }
 
     
@@ -102,7 +95,7 @@ class CheckingAccountController extends Controller
         $checkingAccount->update($request->all());
 
         return redirect()->route('checking-accounts.index')
-            ->with('success', 'CheckingAccount updated successfully');
+            ->with('success', 'Cuenta corriente editada exitosamente.');
     }
 
     public function destroy($id)
@@ -110,7 +103,7 @@ class CheckingAccountController extends Controller
         $checkingAccount = CheckingAccount::find($id)->delete();
 
         return redirect()->route('checking-accounts.index')
-            ->with('success', 'CheckingAccount deleted successfully');
+            ->with('success', 'Cuenta corriente eliminada exitosamente.');
     }
 
  

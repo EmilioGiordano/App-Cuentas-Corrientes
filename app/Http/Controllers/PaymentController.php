@@ -46,7 +46,7 @@ class PaymentController extends Controller
         $payment = Payment::create($request->all());
 
         return redirect()->route('payments.index')
-            ->with('success', 'Payment created successfully.');
+            ->with('success', 'Pago realizado exitosamente.');
     }
 
     public function show($id)
@@ -72,7 +72,7 @@ class PaymentController extends Controller
         $payment->update($request->all());
 
         return redirect()->route('payments.index')
-            ->with('success', 'Payment updated successfully'); 
+            ->with('success', 'Pago editado exitosamente'); 
     }
 
     public function destroy($id)
@@ -80,7 +80,7 @@ class PaymentController extends Controller
         $payment = Payment::find($id)->delete();
 
         return redirect()->route('payments.index')
-            ->with('success', 'Payment deleted successfully');
+            ->with('success', 'Pago eliminado exitosamente.');
     }
 
     public function showPaymentsPerAccount($id)

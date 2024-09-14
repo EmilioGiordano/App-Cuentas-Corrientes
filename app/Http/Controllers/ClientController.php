@@ -57,7 +57,7 @@ public function store(Request $request)
     $client->save();
 
     return redirect()->route('clients.index')
-        ->with('success', 'Client created successfully.');
+        ->with('success', 'Cliente creado exitosamente.');
 }
 
 
@@ -82,7 +82,7 @@ public function store(Request $request)
         $client->update($request->all());
 
         return redirect()->route('clients.index')
-            ->with('success', 'Client updated successfully');
+            ->with('success', 'Cliente editado exitosamente.');
     }
 
     public function destroy($id)
@@ -90,6 +90,6 @@ public function store(Request $request)
         $client = Client::find($id)->delete();
 
         return redirect()->route('clients.index')
-            ->with('success', 'Client deleted successfully');
+            ->with('success', 'Cliente eliminado exitosamente.');
     }
 }

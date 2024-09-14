@@ -55,7 +55,7 @@ class ServiceController extends Controller
         $service = Service::create($request->all());
 
         return redirect()->route('services.index')
-            ->with('success', 'Service created successfully.');
+            ->with('success', 'Servicio creado exitosamente.');
     }
 
     public function show($id)
@@ -72,14 +72,15 @@ class ServiceController extends Controller
         $service->update($request->all());
 
         return redirect()->route('services.index')
-            ->with('success', 'Service updated successfully');
+            ->with('success', 'Servicio editado exitosamente');
     }
 
     public function destroy($id)
     {
         $service = Service::find($id)->delete();
 
+        
         return redirect()->route('services.index')
-            ->with('success', 'Service deleted successfully');
+            ->with('success', 'Servicio eliminado exitosamente');
     }
 }

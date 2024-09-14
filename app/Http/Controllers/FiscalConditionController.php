@@ -48,7 +48,7 @@ class FiscalConditionController extends Controller
         $fiscalCondition = FiscalCondition::create($request->all());
 
         return redirect()->route('fiscal-conditions.index')
-            ->with('success', 'FiscalCondition created successfully.');
+            ->with('success', 'Condición fiscal creada exitosamente.');
     }
 
     /**
@@ -91,7 +91,7 @@ class FiscalConditionController extends Controller
         $fiscalCondition->update($request->all());
 
         return redirect()->route('fiscal-conditions.index')
-            ->with('success', 'FiscalCondition updated successfully');
+            ->with('success', 'Condición fiscal editada exitosamente.');
     }
 
     /**
@@ -104,6 +104,6 @@ class FiscalConditionController extends Controller
         $fiscalCondition = FiscalCondition::find($id)->delete();
 
         return redirect()->route('fiscal-conditions.index')
-            ->with('success', 'FiscalCondition deleted successfully');
+            ->with('success', 'Condición fiscal eliminada exitosamente.');
     }
 }
