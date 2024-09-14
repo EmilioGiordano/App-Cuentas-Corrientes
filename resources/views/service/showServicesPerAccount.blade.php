@@ -30,14 +30,32 @@ Service
                         <span id="card_title">
                             {{ __('Listado de servicios') . ': ' . ($services->first() ? $services->first()->checkingAccount->nombre : '') }}
                         </span>
-                       
-                        <!-- Crear pero para la cuenta unicamente, no permitir seleccionar cuenta -->
+
+                        <!-- Mostrar mensaje de error si existe -->
+                        @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                        @endif
+
+                        <!-- Formulario para seleccionar el rango de fechas -->
                         <div class="float-right">
-                        <a href="{{ route('services.generateSummaryPDF', ['id' => $checkingAccount->id]) }}" class="btn btn-success btn-sm float-right" data-placement="left">
-                            <i class="fa-solid fa-file-invoice"></i> {{ __(' Generar resumen cliente') }}   
-                        </a>
-                        <a href="{{ route('services.createForAccount', ['id' => $checkingAccount->id]) }}" class="btn btn-primary btn-sm float-right" data-placement="left">
-                                {{ __('Crear nuevo') }}
+                            <form action="{{ route('services.generateSummaryPDF', ['id' => $checkingAccount->id]) }}" method="GET" class="float-right d-inline">
+                                <div class="form-group">
+                                    <label for="from_date" class="sr-only">Desde:</label>
+                                    <input type="date" id="from_date" name="from_date" class="form-control form-control-sm d-inline" value="{{ request()->input('from_date') }}" placeholder="Desde">
+                                </div>
+                                <div class="form-group">
+                                    <label for="to_date" class="sr-only">Hasta:</label>
+                                    <input type="date" id="to_date" name="to_date" class="form-control form-control-sm d-inline" value="{{ request()->input('to_date') }}" placeholder="Hasta">
+                                </div>
+                                <button type="submit" class="btn btn-success btn-sm">
+                                    <i class="fa-solid fa-file-invoice"></i> {{ __(' Generar resumen cliente') }}
+                                </button>
+                            </form>
+                            <!-- Crear servicio -->
+                            <a href="{{ route('services.createForAccount', ['id' => $checkingAccount->id]) }}" class="btn btn-primary btn-sm float-right ml-2">
+                                {{ __('Crear servicio') }}
                             </a>
                         </div>
                     </div>

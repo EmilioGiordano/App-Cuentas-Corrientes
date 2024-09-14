@@ -9,6 +9,7 @@ use App\Http\Controllers\PaymentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 
 class ServicePerAccountController extends Controller
 {
@@ -44,15 +45,32 @@ class ServicePerAccountController extends Controller
             ->with('success', 'Servicio creado exitosamente.');
     }
     
-    public function generateSummaryPDF($id)
+    public function generateSummaryPDF(Request $request, $id)
     {
+
+        $fromDate = $request->input('from_date');
+        $toDate = $request->input('to_date');
+        $fromDate = $fromDate ? Carbon::parse($fromDate) : Carbon::minValue();
+        $toDate = $toDate ? Carbon::parse($toDate) : Carbon::maxValue();
+
         $date = now();
         $checkingAccount = CheckingAccount::with('client')->find($id);
         $client = $checkingAccount->client;
         $user = $client->user;
+
         // Obtener servicios y pagos
-        $services = Service::where('id_cuenta', $id)->get();
-        $payments = $checkingAccount->payments;
+        $services = Service::where('id_cuenta', $id)
+        ->whereBetween('fecha', [$fromDate, $toDate])
+        ->get();
+        $payments = $checkingAccount->payments()
+            ->whereBetween('fecha', [$fromDate, $toDate])
+            ->get();
+
+        // Verificar si hay datos para generar el PDF
+        if ($services->isEmpty() && $payments->isEmpty()) {
+            return redirect()->back()->with('error', 'No se encontraron servicios ni pagos para el período especificado.');
+        }    
+
         // Combinar servicios y pagos en una sola colección
         $combined = collect();
         // Agregar servicios
@@ -71,7 +89,7 @@ class ServicePerAccountController extends Controller
             $combined->push([
                 'type' => 'payment',
                 'fecha' => $payment->formatted_from_date, // Asegúrate de que `formatted_date` esté disponible
-                'nro_servicio' => null, // No aplica para pagos
+                'nro_servicio' => $payment->id, // No aplica para pagos
                 'detalles' => $payment->detalles, // Si los pagos tienen detalles
                 'monto' => null,
                 'payment' => $payment->monto
