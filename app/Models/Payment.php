@@ -21,13 +21,13 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Payment extends Model
 {
-    static $rules = [
-        'id_cuenta' => 'required',
-        'id_servicio' => 'required',
-        'monto' => 'required|numeric',
-        'detalles' => 'required|min:5|max:255',
-        'fecha' => 'required',
-    ];
+    // static $rules = [
+    //     'id_cuenta' => 'required',
+    //     'id_servicio' => 'required',
+    //     'monto' => 'required|numeric',
+    //     'detalles' => 'required|min:5|max:255',
+    //     'fecha' => 'required',
+    // ];
 
     protected $casts = [
         'fecha' => 'datetime',

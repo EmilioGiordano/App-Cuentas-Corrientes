@@ -46,8 +46,13 @@
                                 <tbody>
                                     @foreach ($payments as $payment)
                                         <tr>
-                                            <td class="table-cell">{{ 'Pago - ' . ++$i }}</td>                                            
-                                            <td class="table-cell" style="white-space: nowrap; font-weight: bold">{{ $payment->checkingAccount->nombre }}</td>
+                                            <td class="table-cell">{{ '000' . ++$i }}</td>                                            
+                                            <td class="table-cell" style="white-space: nowrap; font-weight: bold">
+                                                <a href="{{ route('services.showServicesPerAccount', ['id' => $payment->checkingAccount->id]) }}">
+                                                    {{ $payment->checkingAccount->nombre }}
+                                                </a>    
+                                            </td>
+
                                             <td class="table-cell" style="white-space: nowrap;">{{ $payment->formatted_from_date }}</td>
                                             <td class="table-cell">{{ $payment->detalles }}</td>
                                             <td class="table-cell" style="white-space: nowrap;">${{ $payment->formatted_monto }}</td>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PaymentPostRequest;
 use App\Models\CheckingAccount;
 use App\Models\Payment;
 use App\Models\Service;
@@ -34,16 +35,13 @@ class PaymentController extends Controller
         $payment = new Payment();
         $service = Service::findOrFail($service_id);
         $checkingAccount = CheckingAccount::findOrFail($cuenta_id);
-      
-    
+
         return view('payment.create', compact('payment', 'service', 'checkingAccount'));
     }
 
-    public function store(Request $request)
+    public function store(PaymentPostRequest $request)
     {
-        request()->validate(Payment::$rules);
-
-        $payment = Payment::create($request->all());
+        Payment::create($request->validated());
 
         return redirect()->route('payments.index')
             ->with('success', 'Pago realizado exitosamente.');
@@ -57,13 +55,13 @@ class PaymentController extends Controller
         return view('payment.show', compact('payment'));
     }
 
-
-    public function edit($id)
-    {
-        $payment = Payment::find($id);
+    // NO es posible editar un PAGO
+    // public function edit($id)
+    // {
+    //     $payment = Payment::find($id);
        
-        return view('payment.edit', compact('payment'));
-    }
+    //     return view('payment.edit', compact('payment'));
+    // }
 
     public function update(Request $request, Payment $payment)
     {

@@ -38,7 +38,7 @@
         <div class="form-group">
             {{ Form::label('monto') }}
             <div class="input-group">
-                {{ Form::text('monto', $payment->monto, ['class' => 'form-control' . ($errors->has('monto') ? ' is-invalid' : ''), 'placeholder' => 'Monto', 'id' => 'monto']) }}
+                {{ Form::text('monto', $payment->monto, ['class' => 'form-control' . ($errors->has('monto') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese el monto del pago', 'id' => 'monto']) }}
                 <div class="input-group-append">
                     <button class="btn btn-success copy-btn ml-3" data-value="{{$service->saldo_pendiente}}">Pagar restante</button>
                 </div>
@@ -49,9 +49,9 @@
         <div class="form-group">
             {{ Form::label('detalles') }}
             <div class="input-group">
-                {{ Form::text('detalles', $payment->detalles, ['class' => 'form-control' . ($errors->has('detalles') ? ' is-invalid' : ''), 'placeholder' => 'Detalles']) }}
+                {{ Form::text('detalles', $payment->detalles, ['class' => 'form-control' . ($errors->has('detalles') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese detalles del pago']) }}
                 <div class="input-group-append">
-                    <button class="btn btn-outline-dark" type="button" id="defaultDetailsBtn">Generar detalles por defecto</button>
+                    <button class="btn btn-outline-dark" type="button" id="defaultDetailsBtn">Detalles por defecto</button>
                 </div>
             </div>
             {!! $errors->first('detalles', '<div class="invalid-feedback">:message</div>') !!}
