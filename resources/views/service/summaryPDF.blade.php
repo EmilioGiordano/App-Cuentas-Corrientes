@@ -15,7 +15,7 @@ $client = $checkingAccount->client;
 
 <body>
 
-    <div class="container"> 
+    <div class="container">
         <!-- Línea superior -->
         <div class="linea-superior">
             <div class="detalle-azul"></div>
@@ -34,8 +34,11 @@ $client = $checkingAccount->client;
 
             <div class="info-comprobante">
                 <p class="tittle">Resumen de cuenta</p>
-
-                <p>Fecha de emisión: {{$date}}</p>
+                <p class="periodo">
+                    <strong>Periodo desde</strong> 
+                     <span class="fecha">{{ $fromDate->format('d/m/Y') }}</span> 
+                    hasta <span class="fecha">{{ $toDate->format('d/m/Y') }}</span>
+                </p>
             </div>
         </div>
 
@@ -47,33 +50,56 @@ $client = $checkingAccount->client;
         </div>
 
         <table class="table">
-        <thead>
-            <tr>
-                <th>Fecha</th>
-                <th>Código</th>
-                <th>Detalles</th>
-                <th>Servicio</th>
-                <th>Pago</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($combined as $item)
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Código</th>
+                    <th>Detalles</th>
+                    <th>Servicio</th>
+                    <th>Pago</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($combined as $item)
                 <tr>
                     <td>{{ $item['fecha'] ?? '' }}</td>
                     <td>000{{ $item['nro_servicio'] ?? '' }}</td>
-              
                     <td>{{ $item['detalles'] ?? '' }}</td>
                     <td>{{ $item['type'] == 'service' ? '$' . number_format($item['monto'], 2) : '' }}</td>
-                    <td>{{ $item['type'] == 'payment' ? '$' . number_format($item['payment'], 2) : '' }}</td>
+                    <td style="padding-bottom: 10px;" >{{ $item['type'] == 'payment' ? '$' . number_format($item['payment'], 2) : '' }}</td>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+                @endforeach
+                    
+                <!-- Línea horizontal de separación con padding -->
+                <tr>
+                    <td colspan="5" style="border-top: 2px solid black; padding-top: 10px;"></td>
+                </tr>
 
-        <div class="total">
-            <p>Importe total: </p>
-        </div>
+                <!-- Fila de subtotales -->
+                <tr>
+                    <td colspan="3"></td>
+                    <td><strong>Subtotal Servicio:</strong></td>
+                    <td><strong>Subtotal Pago:</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="3"></td>
+                    <td>${{ number_format($subtotal_services, 2) }}</td>
+                    <td>${{ number_format($subtotal_payments, 2) }}</td>
+                </tr>
 
+                <!-- Fila del total a pagar alineado con el subtotal -->
+                
+                <tr>
+
+                    <td colspan="3"></td> <!-- Celdas vacías para la alineación -->
+                    <td rowspan="2"><strong>Total a Pagar:</strong></td> <!-- Alineación vertical -->
+                    <td rowspan="2"><strong>${{ number_format($subtotal_services - $subtotal_payments, 2) }}</strong></td>
+                </tr>
+      
+            </tbody>
+            
+        </table>
+        <hr class="dark-hr">
         <div class="firma">
             <p>Firma y autorización</p>
         </div>
@@ -84,9 +110,17 @@ $client = $checkingAccount->client;
         </div>
     </div>
 </body>
+
 </html>
 
 <style>
+
+.dark-hr {
+    border: none; /* Elimina el borde por defecto */
+    height: 2px; /* Ajusta el grosor de la línea */
+    background-color: #000; /* Cambia el color de la línea a negro */
+    margin: 20px 0; /* Ajusta el espacio arriba y abajo de la línea */
+}
     * {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         box-sizing: border-box;
@@ -102,28 +136,32 @@ $client = $checkingAccount->client;
     }
 
     .titulito {
-    display: flex;
-    justify-content: space-between;
-    align-items: center; /* Centra verticalmente ambos bloques */
-    max-width: 800px;
-    padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        /* Centra verticalmente ambos bloques */
+        max-width: 800px;
+        padding: 20px;
     }
 
-    .header, .info-comprobante {
+    .header,
+    .info-comprobante {
         margin: 0;
         padding: 0;
     }
+
     .header {
         display: flex;
         flex-direction: column;
-        margin-right: 30px; /
-        
+        margin-right: 30px;/
     }
+
     .info-comprobante {
         display: flex;
         flex-direction: column;
         text-align: right;
     }
+
     .info-comprobante p {
         margin: 2px 0;
     }
@@ -236,4 +274,6 @@ $client = $checkingAccount->client;
         display: inline-block;
         padding-top: 5px;
     }
+
+
 </style>

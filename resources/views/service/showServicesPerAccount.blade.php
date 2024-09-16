@@ -29,7 +29,9 @@ Service
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <span id="card_title">
                             {{ __('Listado de servicios') . ': ' . ($services->first() ? $services->first()->checkingAccount->nombre : '') }}
+                            
                         </span>
+                        
 
                         <!-- Mostrar mensaje de error si existe -->
                         @if (session('error'))
@@ -38,26 +40,26 @@ Service
                         </div>
                         @endif
 
-                        <!-- Formulario para seleccionar el rango de fechas -->
-                        <div class="float-right">
-                            <form action="{{ route('services.generateSummaryPDF', ['id' => $checkingAccount->id]) }}" method="GET" class="float-right d-inline">
-                                <div class="form-group">
-                                    <label for="from_date" class="sr-only">Desde:</label>
-                                    <input type="date" id="from_date" name="from_date" class="form-control form-control-sm d-inline" value="{{ request()->input('from_date') }}" placeholder="Desde">
-                                </div>
-                                <div class="form-group">
-                                    <label for="to_date" class="sr-only">Hasta:</label>
-                                    <input type="date" id="to_date" name="to_date" class="form-control form-control-sm d-inline" value="{{ request()->input('to_date') }}" placeholder="Hasta">
-                                </div>
-                                <button type="submit" class="btn btn-success btn-sm">
-                                    <i class="fa-solid fa-file-invoice"></i> {{ __(' Generar resumen cliente') }}
-                                </button>
-                            </form>
-                            <!-- Crear servicio -->
-                            <a href="{{ route('services.createForAccount', ['id' => $checkingAccount->id]) }}" class="btn btn-primary btn-sm float-right ml-2">
-                                {{ __('Crear servicio') }}
-                            </a>
-                        </div>
+                    <!-- Formulario para seleccionar el rango de fechas -->
+                    <div class="float-right">
+                        <form action="{{ route('services.generateSummaryPDF', ['id' => $checkingAccount->id]) }}" method="GET" class="float-right d-inline" target="_blank">
+                            <div class="form-group">
+                                <label for="from_date" class="sr-only">Desde:</label>
+                                <input type="date" id="from_date" name="from_date" class="form-control form-control-sm d-inline" value="{{ request()->input('from_date') }}" placeholder="Desde">
+                            </div>
+                            <div class="form-group">
+                                <label for="to_date" class="sr-only">Hasta:</label>
+                                <input type="date" id="to_date" name="to_date" class="form-control form-control-sm d-inline" value="{{ request()->input('to_date') }}" placeholder="Hasta">
+                            </div>
+                            <button type="submit" class="btn btn-success btn-sm">
+                                <i class="fa-solid fa-file-invoice"></i> {{ __(' Generar resumen cliente') }}
+                            </button>
+                        </form>
+
+                        <a href="{{ route('services.createForAccount', ['id' => $checkingAccount->id]) }}" class="btn btn-primary btn-sm float-right ml-2">
+                            {{ __('Crear servicio') }}
+                        </a>
+                    </div>
                     </div>
                 </div>
                 @if ($message = Session::get('success'))

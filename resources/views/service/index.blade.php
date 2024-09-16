@@ -61,7 +61,7 @@
                                 <tbody>
                                 @foreach ($services as $service)
                                     <tr>
-                                        <td class="table-cell">{{ 'Servicio - ' . $service->invoices->invoice_number }}</td>
+                                        <td class="table-cell">{{ '000' . $service->invoices->invoice_number }}</td>
                                         <!-- Link a services Per Account -->
                                         <td class="table-cell" style="white-space: nowrap; font-weight: bold">
                                             <a href="{{ route('services.showServicesPerAccount', ['id' => $service->checkingAccount->id]) }}">

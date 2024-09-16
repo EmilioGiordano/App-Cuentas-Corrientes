@@ -71,6 +71,9 @@ class ServicePerAccountController extends Controller
             return redirect()->back()->with('error', 'No se encontraron servicios ni pagos para el período especificado.');
         }    
 
+        $subtotal_services = $services->sum('monto');
+        $subtotal_payments = $payments->sum('monto');
+
         // Combinar servicios y pagos en una sola colección
         $combined = collect();
         // Agregar servicios
@@ -97,7 +100,7 @@ class ServicePerAccountController extends Controller
         }
         // Ordenar por fecha o por cualquier otro campo que necesites
         // $combined = $combined->sortBy('fecha');
-        $pdf = Pdf::loadView('service.summaryPDF', compact('combined', 'checkingAccount', 'client', 'user', 'date'));
+    $pdf = Pdf::loadView('service.summaryPDF', compact('combined', 'checkingAccount', 'client', 'user', 'fromDate', 'toDate', 'date','subtotal_services','subtotal_payments'));
         return $pdf->stream();
     }
     

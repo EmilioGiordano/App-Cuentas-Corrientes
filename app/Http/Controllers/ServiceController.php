@@ -13,7 +13,7 @@ class ServiceController extends Controller
 {
     public function index()
     {
-        $i = 0;
+        
         $userId = Auth::id();
 
         // Obtener los servicios asociados a las cuentas de los clientes del usuario actual
@@ -21,7 +21,7 @@ class ServiceController extends Controller
             $query->where('id', $userId);
         })->orderBy('created_at', 'asc')->get();
 
-        return view('service.index', compact('services', 'i'));
+        return view('service.index', compact('services'));
     }
 
     public function create()
