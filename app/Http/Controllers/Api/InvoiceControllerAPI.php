@@ -22,6 +22,7 @@ class InvoiceControllerAPI
             return [
                 'id'=> $invoice->id,
                 'name'=> $invoice->file_name,
+                'NUMERO'=>$invoice->invoice_number,
                 'id Servicio Asoc.' => $invoice->id_servicio,
                 'detalles serv.'=> $invoice->service->detalles,
                 'monto'=> $invoice->service->monto,

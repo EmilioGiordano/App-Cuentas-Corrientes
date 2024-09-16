@@ -102,8 +102,6 @@ class InvoiceController extends Controller
         $pdf = Pdf::loadView('invoice.pdf', compact('invoice'));
 
         $pdf->save(storage_path('app/invoices-files/' . $invoice->file_name)); // Guarda el PDF en storage/app/invoices-files
-
-        
         return $pdf->stream();
         
     }

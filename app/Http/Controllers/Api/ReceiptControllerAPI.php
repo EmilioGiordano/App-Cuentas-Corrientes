@@ -23,6 +23,7 @@ class ReceiptControllerAPI
             return [
                 'id'=> $receipt->id,
                 'name'=> $receipt->file_name,
+                'NUMERO'=> $receipt->receipt_number,
                 'id Pago Asoc.' => $receipt->id_pago,
                 'id Servicio Asoc.' => $receipt->payment->id_servicio,
                 'detalles pago.'=> $receipt->payment->detalles,
