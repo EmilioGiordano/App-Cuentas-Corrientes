@@ -62,8 +62,8 @@ Route::resource('checking-accounts', App\Http\Controllers\CheckingAccountControl
 Route::resource('services', App\Http\Controllers\ServiceController::class)->middleware('auth');
 Route::resource('payments', App\Http\Controllers\PaymentController::class)->middleware('auth');
 
-Route::resource('receipts', App\Http\Controllers\ReceiptController::class)->middleware('auth');
-Route::resource('invoices', App\Http\Controllers\InvoiceController::class)->middleware('auth');
+// Route::resource('receipts', App\Http\Controllers\ReceiptController::class)->middleware('auth');
+// Route::resource('invoices', App\Http\Controllers\InvoiceController::class)->middleware('auth');
 
 
 // Ruta para el método create (muestra lista de clientes para elegir)
