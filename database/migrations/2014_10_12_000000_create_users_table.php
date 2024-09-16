@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string('google_id')->nullable()->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('fiscal_name', 100)->nullable()->default(null);
+            $table->string('fiscal_direction', 100)->nullable()->default(null);
+            $table->string('CUIT', 11)->nullable()->default(null);
             $table->rememberToken();
             $table->timestamps();
         });

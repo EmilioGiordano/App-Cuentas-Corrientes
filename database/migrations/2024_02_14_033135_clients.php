@@ -11,7 +11,9 @@ return new class extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_condicion_fiscal')->constrained('fiscal_conditions')->onDelete('cascade');
+            $table->unsignedBigInteger('id_condicion_fiscal')->nullable(); 
+            $table->foreign('id_condicion_fiscal', 'id_condicion_fiscal_clients')->references('id')->on('fiscal_conditions')
+            ->onDelete('set null')->onUpdate('cascade');
             $table->foreignId('id_user')->constrained('users')->onDelete('cascade');
 
             $table->string('nombre', 100);
