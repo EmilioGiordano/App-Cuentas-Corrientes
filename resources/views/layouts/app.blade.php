@@ -48,17 +48,13 @@
                             <a class="nav-link {{ Route::currentRouteName() == 'services.index' ? 'active' : '' }}" href="{{ route('services.index') }}">{{ __('Servicios') }}</a>    
                         </li>
                         
-                        <li class="nav-item">
-                            <a class="nav-link {{ Route::currentRouteName() == 'invoices.index' ? 'active' : '' }}" href="{{ route('invoices.index') }}">{{ __('Facturas C') }}</a>    
-                        </li>
+                   
 
                         <li class="nav-item">
                             <a class="nav-link {{ Route::currentRouteName() == 'payments.index' ? 'active' : '' }}" href="{{ route('payments.index') }}">{{ __('Pagos') }}</a>    
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link {{ Route::currentRouteName() == 'receipts.index' ? 'active' : '' }}" href="{{ route('receipts.index') }}">{{ __('Recibos de pagos') }}</a>    
-                        </li>
+                   
                     </ul>
                 </div>
                 @endauth
