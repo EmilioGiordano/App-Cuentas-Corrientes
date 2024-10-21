@@ -15,9 +15,9 @@
         </div>
 
         <div class="form-group">
-            {{ Form::label('direccion_fiscal') }}
-            {{ Form::text('direccion_fiscal', $checkingAccount->direccion_fiscal, ['class' => 'form-control' . ($errors->has('nombre') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese la dirección del cliente']) }}
-            {!! $errors->first('direccion_fiscal', '<div class="invalid-feedback">:message</div>') !!}
+            {{ Form::label('fiscal_direction') }}
+            {{ Form::text('fiscal_direction', $checkingAccount->fiscal_direction, ['class' => 'form-control' . ($errors->has('fiscal_direction') ? ' is-invalid' : ''), 'placeholder' => 'Ingrese la dirección del cliente']) }}
+            {!! $errors->first('fiscal_direction', '<div class="invalid-feedback">:message</div>') !!}
         </div>
     
 

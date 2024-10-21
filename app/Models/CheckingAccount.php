@@ -36,7 +36,7 @@ class CheckingAccount extends Model
     protected $perPage = 20;
 
     /*** Attributes that should be mass-assignable. * @var array */
-    protected $fillable = ['id_cliente','nombre', 'direccion_fiscal', 'saldo_a_pagar', 'total_services', 'total_payments'];
+    protected $fillable = ['id_cliente','nombre', 'fiscal_direction', 'saldo_a_pagar', 'total_services', 'total_payments'];
     protected $appends =  ['services_ammount', 'payments_ammount'];
 
     // Contador de Servicios por Cuenta Corriente
